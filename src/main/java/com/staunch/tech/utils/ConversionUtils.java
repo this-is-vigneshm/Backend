@@ -26,8 +26,10 @@ public class ConversionUtils {
 		long updatedTime = System.currentTimeMillis();
 		long createdTime = existingAsset.getCreatedTime();
 		String createdBy = existingAsset.getCreatedBy();
-		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getDescription(), assetDto.getPrice(), location,
-				createdBy, createdTime, updatedBy, updatedTime, false);
+		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
+				assetDto.getDescription(), location, assetDto.getCategory(), assetDto.getDepartment(),
+				assetDto.getSubAsset(), assetDto.getSupplier(), assetDto.getPriority(), assetDto.getModel(), false,
+				assetDto.getPrice(), createdBy, createdTime, updatedBy, updatedTime, false);
 	}
 
     public static Employee convertDtoToNewEntity(EmployeeDto employeeDto, String createdBy) {
@@ -117,10 +119,12 @@ public class ConversionUtils {
 
 	}
 
-	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location, String name) {
+	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location, String createdBy) {
 		long createdTime = System.currentTimeMillis();
-		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getDescription(), assetDto.getPrice(), location,
-				createdBy, createdTime, createdBy, createdTime, false);
+		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
+				assetDto.getDescription(), location, assetDto.getCategory(), assetDto.getDepartment(),
+				assetDto.getSubAsset(), assetDto.getSupplier(), assetDto.getPriority(), assetDto.getModel(), false,
+				assetDto.getPrice(), createdBy, createdTime, createdBy, createdTime, false);
 	}
 
 

@@ -6,12 +6,11 @@ import com.staunch.tech.dto.AreaDto;
 import com.staunch.tech.entity.Area;
 
 
-
 public interface IAreaService {
 
-	Area createRoom(AreaDto areaDto);
-	Area getRoom(int roomId);
-	String deleteRoom(int roomId);
-	List<Area> gellAllRoomByFloor(String floorName);
-	List<Area> getAllRoom();
+	Area createArea(AreaDto areaDto);
+	Area getArea(int areaId);
+	String deleteArea(int areaId);
+	List<Area> getAllAreaByFloor(String floorName);
+	List<Area> getAllArea();
 }
