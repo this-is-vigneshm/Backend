@@ -171,7 +171,7 @@ public class WorkOrderService implements IWorkOrderService {
 //		 if(workorderorderNo != workorderDto.getOrderNo()){
 //	            throw new AssetManagementException("WorkOrder orderNo in body is different from path");
 //	            }
-//	        var workorderOpt = workorderRepository.findByOrderNo(workorderorderNo);
+//	        var workorderOpt = workorderRepository.findById(workorderorderNo);
 //	        if(workorderOpt.isEmpty()){
 //	            throw new AssetManagementException("WorkOrder is Invalid");
 //	        }
@@ -183,9 +183,6 @@ public class WorkOrderService implements IWorkOrderService {
 //	        var workorder = workorderOpt.get(0);
 //	        var employeeId = employeeRepository.findById(workorderDto.getEmployeeId());
 //	        var updatedWorkOrder = ConversionUtils.convertDtoToUpdateEntity(workorderDto,employeeId.get(),employee.getName());
-//	        var emailDetails = new EmailDetails(employee.getEmail(),employee.getName(),
-//	        		workorder.getDescription(), workorder.getName(), null);
-//	        emailService.sendSimpleMail(emailDetails);
 //	        return ConversionUtils.convertEntityToRespDto(workorderRepository.save(updatedWorkOrder));	}
 
 

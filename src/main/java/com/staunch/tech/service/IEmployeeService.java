@@ -16,6 +16,6 @@ public interface IEmployeeService {
 
 	List<EmployeeRespDto> getAllEmployees();
 
-	
+	List<EmployeeRespDto> getAllEmployeesByUserType(String usertype);
 
 }

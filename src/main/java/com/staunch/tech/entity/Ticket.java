@@ -31,7 +31,6 @@ public class Ticket {
     @Column(name ="asset_id")
     private String assetId; 
     
-    
     @Column(name ="created_by")
     private String createdBy;
     @Column(name ="created_time")

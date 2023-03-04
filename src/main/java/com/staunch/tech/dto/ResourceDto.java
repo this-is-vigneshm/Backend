@@ -18,7 +18,9 @@ public class ResourceDto {
 
 
 	private int resourceId;
-	@NotBlank(message = "employeeName is empty")
+	@NotBlank(message = "Resource Code is empty")
+	private String resourceCode;
+	@NotBlank(message = "resourceName is empty")
 	private String resourceName;
 	@NotBlank(message = "empty")
 	private String resourceType;
@@ -28,11 +30,10 @@ public class ResourceDto {
 	private Date endDate;
 	@NotNull(message = "Availability is empty")
 	private String availability;
-	@NotNull(message = "User_Id is empty")
+	
 	private int userId;
 	@NotNull(message = "WorkerOrderId is empty")
-	private int workOrderId;
-	@NotNull(message = "INventory_Id is empty")
+	private String workOrderCode;
 	private int inventoryId;
 
 }

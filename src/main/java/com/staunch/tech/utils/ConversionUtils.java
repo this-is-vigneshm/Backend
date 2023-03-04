@@ -107,15 +107,15 @@ public class ConversionUtils {
 	}
 
 	public static Resource convertDtoToNewEntity(ResourceDto resourceDto, Integer userId) {
-		return new Resource(resourceDto.getResourceId(), resourceDto.getResourceName(), resourceDto.getResourceType(),
+		return new Resource(resourceDto.getResourceId(), resourceDto.getResourceCode(), resourceDto.getResourceName(), resourceDto.getResourceType(),
 				resourceDto.getStartDate(), resourceDto.getEndDate(),
-				resourceDto.getAvailability(), userId,resourceDto.getWorkOrderId(),resourceDto.getInventoryId());
+				resourceDto.getAvailability(), userId,resourceDto.getWorkOrderCode(),resourceDto.getInventoryId());
 	}
 
 	public static ResourceDto convertEntityToDto(Resource resource) {
-		return new ResourceDto(resource.getResourceId(), resource.getResourceName(), resource.getResourceType(),
+		return new ResourceDto(resource.getResourceId(), resource.getResourceCode(),resource.getResourceName(), resource.getResourceType(),
 				resource.getStartDate(), resource.getEndDate(), 
-				resource.getAvailability(), resource.getUserId(),resource.getWorkOrderId(),resource.getInventoryId());
+				resource.getAvailability(), resource.getUserId(),resource.getWorkOrderCode(),resource.getInventoryId());
 
 	}
 
@@ -143,7 +143,7 @@ public class ConversionUtils {
 	        long createdTime = System.currentTimeMillis();
 	        var data = ImageUtils.compressImage(file.getBytes());
 	        var name =file.getOriginalFilename();
-	        return new WorkOrder(workorderDto.getOrderNo(), workorderDto.getStatus(),workorderDto.getName(),
+	        return new WorkOrder(workorderDto.getOrderNo(),workorderDto.getTicketId(),workorderDto.getWorkOrderCode(), workorderDto.getStatus(),workorderDto.getName(),
 	        		workorderDto.getEmailId(),employee,workorderDto.getPhoneNumber(),
 	                workorderDto.getDescription(),workorderDto.getWorkSubject(),workorderDto.getTaskDetails(),workorderDto.getDate(),workorderDto.getWorkOrderCost(),
 	                data,name,createdBy, createdTime, createdBy, createdTime,0,workorderDto.getExpectedCompletionTime());
@@ -152,7 +152,7 @@ public class ConversionUtils {
 	 public static WorkOrderRespDto convertEntityToRespDto(WorkOrder workorder) {
 	    	
 	        byte[] images=ImageUtils.decompressImage(workorder.getData());
-	        return new WorkOrderRespDto(workorder.getOrderNo(),workorder.getStatus(),workorder.getName(),workorder.getEmailId(),workorder.getEmployeeId(),workorder.getPhoneNumber(),
+	        return new WorkOrderRespDto(workorder.getOrderNo(),workorder.getTicketId(),workorder.getCode(),workorder.getStatus(),workorder.getName(),workorder.getEmailId(),workorder.getEmployeeId(),workorder.getPhoneNumber(),
 	        		workorder.getDescription(),workorder.getWorkSubject(),workorder.getTaskDetails(),workorder.getDate(),workorder.getWorkOrderCost(),images,workorder.getCreatedBy(),workorder.getCreatedTime(),
 	        		workorder.getUpdatedBy(),workorder.getUpdatedTime(),workorder.getTimeTaken(),false,workorder.getExpectedCompletionTime());
 	    }

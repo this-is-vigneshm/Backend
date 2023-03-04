@@ -20,6 +20,6 @@ public interface IResourceService {
 
 	String deleteById(int id);
 	
-	List<Resource> getAllByworkorderId(int workOrderId);
+	List<Resource> getAllByworkorderCode(String workOrderCode);
 
 }

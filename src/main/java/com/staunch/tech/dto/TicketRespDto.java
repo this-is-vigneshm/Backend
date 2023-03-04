@@ -23,7 +23,6 @@ public class TicketRespDto {
     private String issueTYpe;
     private String assetId;
     
-    
     private String createdBy;
     private long createdTime;
     private String updatedBy;

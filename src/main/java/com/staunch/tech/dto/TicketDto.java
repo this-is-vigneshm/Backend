@@ -28,8 +28,8 @@ public class TicketDto {
 	private String issueType;
 	
 	private String assetId;
-	
 	private long totalAmountSpent;
+	
 
 	@NotNull(message = "user id is Empty!")
 	private int userId;

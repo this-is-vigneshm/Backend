@@ -109,6 +109,18 @@ public class EmployeeService implements IEmployeeService {
 		}
 		return employeeDtoList;
 	}
+	@Override
+	public List<EmployeeRespDto> getAllEmployeesByUserType(String usertype) {
+		var employeeList = employeeRepository.findByUsertype(usertype);
+		if (employeeList.isEmpty()) {
+			throw new AssetManagementException("Ticket List is Empty");
+		}
+		var employeeDtoList = new ArrayList<EmployeeRespDto>();
+		for (Employee emp : employeeList) {
+			employeeDtoList.add(ConversionUtils.convertEntityToDto(emp));
+		}
+		return employeeDtoList;
+	}
 
 }
 

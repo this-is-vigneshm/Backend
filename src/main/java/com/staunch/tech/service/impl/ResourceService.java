@@ -36,13 +36,10 @@ public class ResourceService implements IResourceService {
 	@Override
 	public Resource registerResource(ResourceDto resourceDto) {
 		validationUtils.validate(resourceDto);
-		var userOpt = employeeRepository.findById(resourceDto.getUserId());
-		if (userOpt.isEmpty()) {
-			throw new AssetManagementException("User Id is Invalid!");
-		}
+
 
 		try {
-			var resource = ConversionUtils.convertDtoToNewEntity(resourceDto, userOpt.get().getId());
+			var resource = ConversionUtils.convertDtoToNewEntity(resourceDto, resourceDto.getUserId());
 			return repository.save(resource);
 		} catch (DataIntegrityViolationException e) {
 			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
@@ -92,9 +89,9 @@ public class ResourceService implements IResourceService {
 		return "resource with id : " + id + " deleted successfully";
 	}
 	
-	public List<Resource> getAllByworkorderId(int workOrderId) {
+	public List<Resource> getAllByworkorderCode(String workOrderCode) {
 
-		var resourceList = repository.findByWorkOrderId(workOrderId);
+		var resourceList = repository.findByWorkOrderCode(workOrderCode);
 	
 		if (resourceList.isEmpty()) {
 			throw new AssetManagementException("Resource List is Empty");

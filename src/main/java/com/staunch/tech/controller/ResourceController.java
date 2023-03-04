@@ -54,9 +54,9 @@ public class ResourceController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-	@GetMapping("/wo/{id}")
-	public ResponseEntity<ApiResponseDto> getAllByworkorderId(@PathVariable int id) {
-		var response = new ApiResponseDto("1200", "Success", iResourceService.getAllByworkorderId(id));
+	@GetMapping("/wo/{code}")
+	public ResponseEntity<ApiResponseDto> getAllByworkorder(@PathVariable String code) {
+		var response = new ApiResponseDto("1200", "Success", iResourceService.getAllByworkorderCode(code));
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

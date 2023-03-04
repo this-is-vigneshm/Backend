@@ -47,4 +47,10 @@ public class EmployeeController {
         return new ResponseEntity<>(response,
                 HttpStatus.ACCEPTED);
     }
+    @GetMapping("/usertype/{usertype}")
+	public ResponseEntity<ApiResponseDto> getAllEmployeesByUserType(@PathVariable("usertype") String usertype) {
+		var response = new ApiResponseDto("1200", "Success", employeeService.getAllEmployeesByUserType(usertype));
+		return new ResponseEntity<>(response, HttpStatus.OK);
+		
+	}
 }

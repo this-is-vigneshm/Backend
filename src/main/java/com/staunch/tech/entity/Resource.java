@@ -22,6 +22,8 @@ public class Resource {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Resource_id")
 	private int resourceId;
+	@Column(name = "resource_code")
+	private String resourceCode;
 	@Column(name = "Resource_name")
 	private String resourceName;
 	@Column(name = "Resource_type")
@@ -35,7 +37,7 @@ public class Resource {
 	@Column(name = "user_Id")
 	private int userId;
 	@Column(name = "WorkerOrder_Id")
-	private int workOrderId;
+	private String workOrderCode;
 	@Column(name = "Inventory_Id")
 	private int inventoryId;
 }

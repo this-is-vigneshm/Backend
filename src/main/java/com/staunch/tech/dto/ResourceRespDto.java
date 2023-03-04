@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResourceRespDto {
 	private int resourceid;
+	private String resourceCode;
 	private String resourceName;
 	private String resourcetype;
 	private Date startDate;
