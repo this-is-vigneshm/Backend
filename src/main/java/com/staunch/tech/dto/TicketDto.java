@@ -28,6 +28,7 @@ public class TicketDto {
 	private String issueType;
 	
 	private String assetId;
+	private int workOrderId;
 	private long totalAmountSpent;
 	
 

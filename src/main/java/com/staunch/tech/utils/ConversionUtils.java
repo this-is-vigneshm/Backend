@@ -67,7 +67,7 @@ public class ConversionUtils {
 	public static Ticket convertDtoToNewEntity(TicketDto ticketDto, Employee employee, String createdBy) {
 		long createdTime = System.currentTimeMillis();
 		return new Ticket(UUID.randomUUID().toString(), ticketDto.getTitle(), ticketDto.getDescription(),
-				ticketDto.getCategory(), "Open", employee, ticketDto.getIssueType(), ticketDto.getAssetId(), createdBy,
+				ticketDto.getCategory(), "Open", employee, ticketDto.getIssueType(), ticketDto.getAssetId(),ticketDto.getWorkOrderId(), createdBy,
 				createdTime, createdBy, createdTime, 0, 0, ticketDto.getExpectedCompletionTime());
 	}
 
@@ -77,7 +77,7 @@ public class ConversionUtils {
 		String createdBy = employee.getCreatedBy();
 		return new Ticket(ticketDto.getUuid(), ticketDto.getTitle(), ticketDto.getDescription(),
 				ticketDto.getCategory(), ticketDto.getStatus(), employee, ticketDto.getIssueType(),
-				ticketDto.getAssetId(), createdBy, createdTime, updatedBy, updatedTime, 0, 0,
+				ticketDto.getAssetId(), ticketDto.getWorkOrderId(),createdBy, createdTime, updatedBy, updatedTime, 0, 0,
 				ticketDto.getExpectedCompletionTime());
 	}
 
@@ -85,7 +85,7 @@ public class ConversionUtils {
 		return new TicketRespDto(ticket.getUuid(), ticket.getTitle(), ticket.getDescription(), ticket.getCategory(),
 				ticket.getStatus(), ticket.getEmployeeId().getId(), ticket.getEmployeeId().getName(),
 				ticket.getEmployeeId().getEmail(), ticket.getEmployeeId().getDepartment(), ticket.getIssueType(),
-				ticket.getAssetId(), ticket.getCreatedBy(), ticket.getCreatedTime(), ticket.getUpdatedBy(),
+				ticket.getAssetId(), ticket.getWorkOrderId(),ticket.getCreatedBy(), ticket.getCreatedTime(), ticket.getUpdatedBy(),
 				ticket.getUpdatedTime(), ticket.getTimeTaken(), false, ticket.getExpectedCompletionTime());
 	}
 
@@ -143,7 +143,7 @@ public class ConversionUtils {
 	        long createdTime = System.currentTimeMillis();
 	        var data = ImageUtils.compressImage(file.getBytes());
 	        var name =file.getOriginalFilename();
-	        return new WorkOrder(workorderDto.getOrderNo(),workorderDto.getTicketId(),workorderDto.getWorkOrderCode(), workorderDto.getStatus(),workorderDto.getName(),
+	        return new WorkOrder(workorderDto.getOrderNo(),workorderDto.getWorkOrderCode(), workorderDto.getStatus(),workorderDto.getName(),
 	        		workorderDto.getEmailId(),employee,workorderDto.getPhoneNumber(),
 	                workorderDto.getDescription(),workorderDto.getWorkSubject(),workorderDto.getTaskDetails(),workorderDto.getDate(),workorderDto.getWorkOrderCost(),
 	                data,name,createdBy, createdTime, createdBy, createdTime,0,workorderDto.getExpectedCompletionTime());
@@ -152,7 +152,7 @@ public class ConversionUtils {
 	 public static WorkOrderRespDto convertEntityToRespDto(WorkOrder workorder) {
 	    	
 	        byte[] images=ImageUtils.decompressImage(workorder.getData());
-	        return new WorkOrderRespDto(workorder.getOrderNo(),workorder.getTicketId(),workorder.getCode(),workorder.getStatus(),workorder.getName(),workorder.getEmailId(),workorder.getEmployeeId(),workorder.getPhoneNumber(),
+	        return new WorkOrderRespDto(workorder.getOrderNo(),workorder.getCode(),workorder.getStatus(),workorder.getName(),workorder.getEmailId(),workorder.getEmployeeId(),workorder.getPhoneNumber(),
 	        		workorder.getDescription(),workorder.getWorkSubject(),workorder.getTaskDetails(),workorder.getDate(),workorder.getWorkOrderCost(),images,workorder.getCreatedBy(),workorder.getCreatedTime(),
 	        		workorder.getUpdatedBy(),workorder.getUpdatedTime(),workorder.getTimeTaken(),false,workorder.getExpectedCompletionTime());
 	    }

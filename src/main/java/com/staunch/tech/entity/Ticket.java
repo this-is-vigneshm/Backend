@@ -30,6 +30,8 @@ public class Ticket {
     private String issueType;
     @Column(name ="asset_id")
     private String assetId; 
+    @Column(name = "workOrder_id")
+    private int workOrderId;
     
     @Column(name ="created_by")
     private String createdBy;

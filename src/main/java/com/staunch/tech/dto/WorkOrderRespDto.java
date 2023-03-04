@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class WorkOrderRespDto {
 	
 	private int orderNo;
-	private String ticketId;
 	private String workOrderCode;
 	private String status;
 	private String name;

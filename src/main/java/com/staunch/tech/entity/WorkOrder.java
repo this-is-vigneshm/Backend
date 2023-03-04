@@ -32,8 +32,7 @@ public class WorkOrder {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int orderNo;
 	
-	@Column(name = "ticket_id")
-	private String ticketId;
+
 	@Column(name = "workOrder_code")
 	private String code;
 	
