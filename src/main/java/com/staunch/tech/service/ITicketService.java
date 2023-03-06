@@ -21,4 +21,6 @@ public interface ITicketService {
      TicketRespDto updateTicket(String ticketId, TicketDto ticketDto);
      
     List<TicketRespDto> getAllTicketsById(List<String> listId);
+    
+    TicketRespDto addWOId(int workOrderId, String ticketId);
 }

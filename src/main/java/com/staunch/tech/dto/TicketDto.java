@@ -28,7 +28,9 @@ public class TicketDto {
 	private String issueType;
 	
 	private String assetId;
+	@NotNull(message = "Work Order Id is Empty")
 	private int workOrderId;
+	
 	private long totalAmountSpent;
 	
 

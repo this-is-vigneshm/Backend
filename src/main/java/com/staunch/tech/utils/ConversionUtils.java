@@ -143,7 +143,7 @@ public class ConversionUtils {
 	        long createdTime = System.currentTimeMillis();
 	        var data = ImageUtils.compressImage(file.getBytes());
 	        var name =file.getOriginalFilename();
-	        return new WorkOrder(workorderDto.getOrderNo(),workorderDto.getWorkOrderCode(), workorderDto.getStatus(),workorderDto.getName(),
+	        return new WorkOrder(workorderDto.getOrderNo(),workorderDto.getTicketId(),workorderDto.getWorkOrderCode(), workorderDto.getStatus(),workorderDto.getName(),
 	        		workorderDto.getEmailId(),employee,workorderDto.getPhoneNumber(),
 	                workorderDto.getDescription(),workorderDto.getWorkSubject(),workorderDto.getTaskDetails(),workorderDto.getDate(),workorderDto.getWorkOrderCost(),
 	                data,name,createdBy, createdTime, createdBy, createdTime,0,workorderDto.getExpectedCompletionTime());
@@ -152,7 +152,7 @@ public class ConversionUtils {
 	 public static WorkOrderRespDto convertEntityToRespDto(WorkOrder workorder) {
 	    	
 	        byte[] images=ImageUtils.decompressImage(workorder.getData());
-	        return new WorkOrderRespDto(workorder.getOrderNo(),workorder.getCode(),workorder.getStatus(),workorder.getName(),workorder.getEmailId(),workorder.getEmployeeId(),workorder.getPhoneNumber(),
+	        return new WorkOrderRespDto(workorder.getOrderNo(),workorder.getTicketId(),workorder.getCode(),workorder.getStatus(),workorder.getName(),workorder.getEmailId(),workorder.getEmployeeId(),workorder.getPhoneNumber(),
 	        		workorder.getDescription(),workorder.getWorkSubject(),workorder.getTaskDetails(),workorder.getDate(),workorder.getWorkOrderCost(),images,workorder.getCreatedBy(),workorder.getCreatedTime(),
 	        		workorder.getUpdatedBy(),workorder.getUpdatedTime(),workorder.getTimeTaken(),false,workorder.getExpectedCompletionTime());
 	    }

@@ -22,8 +22,8 @@ public class TicketRespDto {
     private String employeeDepartment;
     private String issueTYpe;
     private String assetId;
-    private int workOrderId;
-    
+	private int workOrderId;
+
     private String createdBy;
     private long createdTime;
     private String updatedBy;

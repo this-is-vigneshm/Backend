@@ -63,6 +63,7 @@ public class TicketService implements ITicketService {
         if(userOpt.isEmpty()) {
             throw new AssetManagementException("User Id is Invalid!");
         }
+        
         var ticket = ConversionUtils.convertDtoToNewEntity(ticketDto, employeeOpt.get(),userOpt.get().getName());
         var employee = employeeOpt.get();
         var emailDetails = new EmailDetails(employee.getEmail(),employee.getName(), ticket.getDescription(), ticket.getTitle(), null);
@@ -250,5 +251,12 @@ public class TicketService implements ITicketService {
 	       tickets.add(ConversionUtils.convertEntityToRespDto(ticketOpt.get()));
 		}	
 		return tickets;
+	}
+
+	@Override
+	public TicketRespDto addWOId(int workOrderId, String ticketId) {
+		var ticket = ticketRepository.findByUuid(ticketId);
+		ticket.get(0).setWorkOrderId(workOrderId);;
+		return null;
 	} 
 }

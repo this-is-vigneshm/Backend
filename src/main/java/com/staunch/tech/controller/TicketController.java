@@ -77,6 +77,11 @@ public class TicketController {
 	public ResponseEntity<ApiResponseDto> getTicket(@PathVariable("ticketId") String ticketId) {
 		var response = new ApiResponseDto("1200", "Success", ticketService.getTicketById(ticketId));
 		return new ResponseEntity<>(response, HttpStatus.OK);
+		
 	}
-
+	@PutMapping("/WOId/{ticketId}")
+	public ResponseEntity<ApiResponseDto> setWOId(@PathVariable("ticketId") String ticketId, @RequestBody int workOrderId) {
+		var response = new ApiResponseDto("1200", "Success", ticketService.addWOId(workOrderId, ticketId));
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 }
