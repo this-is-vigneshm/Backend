@@ -14,6 +14,6 @@ public interface WorkOrderRepository extends JpaRepository<WorkOrder, Integer> {
 
     List<WorkOrder> findByStatus(String status);
     
-    Optional<WorkOrder> findByName(String fileName);
+    Optional<WorkOrder> findByFileName(String fileName);
 
 }

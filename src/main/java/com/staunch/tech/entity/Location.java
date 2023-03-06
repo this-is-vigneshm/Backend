@@ -34,20 +34,7 @@ public class Location {
     private String inactiveDate;
     @Column(name = "FAC_LOCATION_CODE")
     private String facLocationCode;
-    @Column(name = "ADDRESS_LINE1")
-    private String addressLine1;
-    @Column(name = "ADDRESS_LINE2")
-    private String addressLine2;
-    @Column(name = "ADDRESS_LINE3")
-    private String addressLine3;
-    @Column(name = "CITY")
-    private String city;
-    @Column(name = "STATE")
-    private String state;
-    @Column(name = "POSTAL_CODE")
-    private String postalCode;
-    @Column(name = "COUNTRY")
-    private String country;
+
     
     @Column(name = "CREATED_TIME")
     private long createdTime;
@@ -57,10 +44,6 @@ public class Location {
     private long lastUpdatedTime;
     @Column(name = "LAST_UPDATED_BY")
     private  String lastUpdatedBy;
-    @Column(name = "DAG_RUN_ID")
-    private String dagRunId;
-    @Column(name = "TASK_ID_JOB_ID")
-    private String taskIdJobId;
     
     
     @Transient

@@ -1,5 +1,6 @@
 package com.staunch.tech.dto;
 
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -12,12 +13,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LocationsDto {
 	
-	@NotNull
+	@NotNull(message = "Id id empty")
 	private int id;
 	
-	@NotBlank
+	@NotBlank(message = "Name id empty")
 	private String name;
 	
-	@NotNull
+	private String description;
+	
+	@NotBlank(message = "addressLine1 id empty")
+    private String addressLine1;
+	@NotBlank(message = "addressLine2 id empty")
+    private String addressLine2;
+	
+    private String addressLine3;
+    @NotBlank(message = "city id empty")
+    private String city;
+    @NotBlank(message = "state id empty")
+    private String state;
+    @NotNull(message = "postalCode id empty")
+    private String postalCode;
+    @NotBlank(message = "country id empty")
+    private String country;
+    @NotBlank(message = "userId id empty")
 	private int userId;
 }

@@ -19,7 +19,6 @@ import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ConversionUtils {
-	private static String createdBy;
 
 	public static Asset convertDtoToUpdateEntity(AssetDto assetDto, Location location, String updatedBy,
 			Asset existingAsset) {
@@ -28,8 +27,16 @@ public class ConversionUtils {
 		String createdBy = existingAsset.getCreatedBy();
 		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
 				assetDto.getDescription(), location, assetDto.getCategory(), assetDto.getDepartment(),
-				assetDto.getSubAsset(), assetDto.getSupplier(), assetDto.getPriority(), assetDto.getModel(), false,
+				assetDto.getSubAsset(),assetDto.getSystem(), assetDto.getSupplier(),assetDto.getStatus(), assetDto.getPriority(),assetDto.getMake(), assetDto.getModel(),
 				assetDto.getPrice(), createdBy, createdTime, updatedBy, updatedTime, false);
+	}
+	
+	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location, String createdBy) {
+		long createdTime = System.currentTimeMillis();
+		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
+				assetDto.getDescription(), location, assetDto.getCategory(), assetDto.getDepartment(),
+				assetDto.getSubAsset(),assetDto.getSystem(), assetDto.getSupplier(),assetDto.getStatus(), assetDto.getPriority(),assetDto.getMake(), assetDto.getModel(),
+				assetDto.getPrice(), createdBy, createdTime, createdBy, createdTime, false);
 	}
 
     public static Employee convertDtoToNewEntity(EmployeeDto employeeDto, String createdBy) {
@@ -119,13 +126,7 @@ public class ConversionUtils {
 
 	}
 
-	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location, String createdBy) {
-		long createdTime = System.currentTimeMillis();
-		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
-				assetDto.getDescription(), location, assetDto.getCategory(), assetDto.getDepartment(),
-				assetDto.getSubAsset(), assetDto.getSupplier(), assetDto.getPriority(), assetDto.getModel(), false,
-				assetDto.getPrice(), createdBy, createdTime, createdBy, createdTime, false);
-	}
+
 
 
 //	public static ResourceRespDto convertEntityToDto1(Resource resource) {
@@ -143,7 +144,7 @@ public class ConversionUtils {
 	        long createdTime = System.currentTimeMillis();
 	        var data = ImageUtils.compressImage(file.getBytes());
 	        var name =file.getOriginalFilename();
-	        return new WorkOrder(workorderDto.getOrderNo(),workorderDto.getTicketId(),workorderDto.getWorkOrderCode(), workorderDto.getStatus(),workorderDto.getName(),
+	        return new WorkOrder(workorderDto.getOrderNo(),workorderDto.getWorkOrderCode(), workorderDto.getStatus(),workorderDto.getName(),
 	        		workorderDto.getEmailId(),employee,workorderDto.getPhoneNumber(),
 	                workorderDto.getDescription(),workorderDto.getWorkSubject(),workorderDto.getTaskDetails(),workorderDto.getDate(),workorderDto.getWorkOrderCost(),
 	                data,name,createdBy, createdTime, createdBy, createdTime,0,workorderDto.getExpectedCompletionTime());
@@ -152,15 +153,15 @@ public class ConversionUtils {
 	 public static WorkOrderRespDto convertEntityToRespDto(WorkOrder workorder) {
 	    	
 	        byte[] images=ImageUtils.decompressImage(workorder.getData());
-	        return new WorkOrderRespDto(workorder.getOrderNo(),workorder.getTicketId(),workorder.getCode(),workorder.getStatus(),workorder.getName(),workorder.getEmailId(),workorder.getEmployeeId(),workorder.getPhoneNumber(),
-	        		workorder.getDescription(),workorder.getWorkSubject(),workorder.getTaskDetails(),workorder.getDate(),workorder.getWorkOrderCost(),images,workorder.getCreatedBy(),workorder.getCreatedTime(),
+	        return new WorkOrderRespDto(workorder.getOrderNo(),workorder.getCode(),workorder.getStatus(),workorder.getName(),workorder.getEmailId(),workorder.getEmployeeId(),workorder.getPhoneNumber(),
+	        		workorder.getDescription(),workorder.getWorkSubject(),workorder.getTaskDetails(),workorder.getDate(),workorder.getWorkOrderCost(),images, workorder.getFileName(),workorder.getCreatedBy(),workorder.getCreatedTime(),
 	        		workorder.getUpdatedBy(),workorder.getUpdatedTime(),workorder.getTimeTaken(),false,workorder.getExpectedCompletionTime());
 	    }
 	 
 	 public static Inventory convertDtoToNewEntity(InventoryDto inventoryDto, String createdBy) {
 			long createdTime = System.currentTimeMillis();
 			return new Inventory(inventoryDto.getId(), inventoryDto.getName(), inventoryDto.getCode(),inventoryDto.getDescription(),
-					inventoryDto.getQuantity(), inventoryDto.getPrice(), createdBy, createdTime, createdBy, createdTime,
+					inventoryDto.getQuantity(), inventoryDto.getPrice(),inventoryDto.getStatus(),createdBy, createdTime, createdBy, createdTime,
 					false);
 		}
 
@@ -170,12 +171,12 @@ public class ConversionUtils {
 			long createdTime = inventory.getCreatedTime();
 			String createdBy = inventory.getCreatedBy();
 			return new Inventory(inventoryDto.getId(), inventoryDto.getName(), inventoryDto.getCode(),inventoryDto.getDescription(),
-					inventoryDto.getQuantity(), inventoryDto.getPrice(), createdBy, createdTime, updatedBy, updatedTime, false);
+					inventoryDto.getQuantity(), inventoryDto.getPrice(),inventoryDto.getStatus(), createdBy, createdTime, updatedBy, updatedTime, false);
 		}
 		
 		public static Locations convertDtoToNewEntity(LocationsDto locationDto, String createdBy) {
 			long createdTime = System.currentTimeMillis();
-			return new Locations(locationDto.getId(), locationDto.getName(), createdBy, createdTime, createdBy, createdTime);
+			return new Locations(locationDto.getId(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(), createdBy, createdTime, createdBy, createdTime);
 		}
 
 		public static Locations convertDtoToUpdateEntity(LocationsDto locationDto, String updatedBy,
@@ -183,7 +184,7 @@ public class ConversionUtils {
 			long updatedTime = System.currentTimeMillis();
 			long createdTime = location.getCreatedTime();
 			String createdBy = location.getCreatedBy();
-			return new Locations(locationDto.getId(), locationDto.getName(), createdBy, createdTime, updatedBy, updatedTime);
+			return new Locations(locationDto.getId(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(),createdBy, createdTime, updatedBy, updatedTime);
 		}
 		public static String convertTimestampToWeek(long timestamp)
 	    {

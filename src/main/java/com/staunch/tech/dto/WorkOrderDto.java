@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 
 public class WorkOrderDto {
 	private int orderNo;
-	@NotNull(message = "Ticket Id is Empty")
-	private String ticketId;
+
 	@NotNull(message = "code is Empty")
 	private String workOrderCode;
 	private String status;
@@ -37,7 +36,8 @@ public class WorkOrderDto {
     @JsonFormat(pattern = "yyyy-mm-dd") 
     private Date date;
     private int workOrderCost;
-//    private byte[] data;
+    private byte[] data;
+    private String fileName;
 	@NotNull
 	private int employeeId;	
 	@NotNull(message = "Expected Completion Change is Empty!")

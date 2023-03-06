@@ -1,3 +1,4 @@
+
 package com.staunch.tech.entity;
 
 import lombok.AllArgsConstructor;
@@ -39,14 +40,25 @@ public class Asset {
     private String department;
     @Column(name = "sub_asset")
     private String subAsset;
+    
+    @Column(name = "asset_system")
+    private String  system;
+    
     @Column(name = "supplier")
     private String supplier;
+    
+    @Column(name = "Status")
+    private String status; 
+    
     @Column(name = "priority")
     private String priority;
+    
+    @Column(name = "Make")
+    private String make;    
+    
     @Column(name = "model")
     private String model;
     
-    private boolean status;
     
    
     @Column(name ="price")

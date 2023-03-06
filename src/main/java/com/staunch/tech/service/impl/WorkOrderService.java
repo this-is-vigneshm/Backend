@@ -126,8 +126,8 @@ public class WorkOrderService implements IWorkOrderService {
 	}
 
 	
-	public byte[] downloadImage(String fileName){
-        Optional<WorkOrder> dbImageData = workorderRepository.findByName(fileName);
+	public byte[] downloadImage(int id){
+        Optional<WorkOrder> dbImageData = workorderRepository.findById(id);
         byte[] images=ImageUtils.decompressImage(dbImageData.get().getData());
         return images;
     }

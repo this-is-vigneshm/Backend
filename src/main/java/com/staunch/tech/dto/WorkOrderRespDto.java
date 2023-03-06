@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class WorkOrderRespDto {
 	
 	private int orderNo;
-	private String ticketId;
 	private String workOrderCode;
 	private String status;
 	private String name;
@@ -29,6 +28,7 @@ public class WorkOrderRespDto {
 	private Date date;
 	private int workOrderCost;
 	private byte[] data;
+	private String fileName;
 	private String createdBy;
     private long createdTime;
     private String updatedBy;

@@ -18,7 +18,7 @@ public interface IWorkOrderService {
 //	WorkOrderRespDto updateWorkOrderStatus(UpdateWorkOrderStatusDto updateWorkOrderstatusDto);
 //	WorkOrderRespDto updateWorkOrder(int workorderorderNo,WorkOrderDto workorderDto) throws IOException;
 	String deleteWorkOrder(int workorderorderNo);
-	byte[] downloadImage(String fileName);
+	byte[] downloadImage(int id);
 
 	
 	

@@ -32,11 +32,15 @@ public class Inventory {
 	@Column(name = "description")
 	private String description;
 	
-	@Column
+	@Column(name = "itemQuantity")
 	private int quantity;
 	
-	@Column
+	@Column(name = "itemPrice")
 	private float price;
+	
+	@Column(name = "itemStatus")
+	private String status;
+	
 	
     @Column(name ="created_by")
     private String createdBy;
@@ -50,3 +54,4 @@ public class Inventory {
     @Transient
     private boolean expand;
 }
+

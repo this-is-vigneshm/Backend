@@ -29,6 +29,9 @@ public class InventoryDto {
 	@NotNull
 	private float price;
 	
+	@NotNull
+	private String status;
+	
 	@NotNull(message = "user id is Empty!")
 	private int userId;
 }
