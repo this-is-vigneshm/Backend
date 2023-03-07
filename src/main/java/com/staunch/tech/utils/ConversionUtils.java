@@ -44,7 +44,7 @@ public class ConversionUtils {
         return new Employee(employeeDto.getId(), employeeDto.getName(),
                 employeeDto.getEmail(),employeeDto.getUsername(),employeeDto.getPhoneNumber(), employeeDto.getDepartment(), employeeDto.getDesignation(),employeeDto.getRoles(),
                 employeeDto.getAddress(),employeeDto.getLocation(),employeeDto.getUsertype(),
-                employeeDto.getResourceplanner(),employeeDto.getPassword(),createdBy, createdTime, createdBy, createdTime);
+                employeeDto.getResourceplanner(),employeeDto.getStatus(),employeeDto.getPassword(),createdBy, createdTime, createdBy, createdTime,false);
     }
 
     /**
@@ -67,8 +67,8 @@ public class ConversionUtils {
         String workertype = employeeDto.getUsertype() == null ? employee.getUsertype() : employeeDto.getUsertype();*/
         
  
-        return new Employee(employee.getId(), employee.getName(),employee.getEmail(),employee.getUsername(),employee.getPhoneNumber(),employee.getDepartment(),employee.getDesignation(),  employee.getRoles(),employee.getAddress(),employee.getLocation(),employee.getUsertype(),employee.getResourceplanner(),employee.getPassword(),
-              createdBy, createdTime, updatedBy, updatedTime);
+        return new Employee(employee.getId(), employee.getName(),employee.getEmail(),employee.getUsername(),employee.getPhoneNumber(),employee.getDepartment(),employee.getDesignation(),  employee.getRoles(),employee.getAddress(),employee.getLocation(),employee.getUsertype(),employee.getResourceplanner(),employee.getStatus(),employee.getPassword(),
+              createdBy, createdTime, updatedBy, updatedTime, false);
     }
 
 	public static Ticket convertDtoToNewEntity(TicketDto ticketDto, Employee employee, String createdBy) {
@@ -99,7 +99,7 @@ public class ConversionUtils {
 	public static EmployeeRespDto convertEntityToDto(Employee employee) {
         return new EmployeeRespDto(employee.getId(), employee.getName(), employee.getEmail(), employee.getUsername(),
                 employee.getPhoneNumber(), employee.getDepartment(), employee.getDesignation(), employee.getRoles(),
-                employee.getAddress(),employee.getLocation(),employee.getUsertype(),employee.getResourceplanner(),employee.getPassword()
+                employee.getAddress(),employee.getLocation(),employee.getUsertype(),employee.getResourceplanner(),employee.getStatus(),false,employee.getPassword()
                );
     }
 
@@ -176,7 +176,7 @@ public class ConversionUtils {
 		
 		public static Locations convertDtoToNewEntity(LocationsDto locationDto, String createdBy) {
 			long createdTime = System.currentTimeMillis();
-			return new Locations(locationDto.getId(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(), createdBy, createdTime, createdBy, createdTime);
+			return new Locations(locationDto.getId(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(), createdBy, createdTime, createdBy, createdTime, false);
 		}
 
 		public static Locations convertDtoToUpdateEntity(LocationsDto locationDto, String updatedBy,
@@ -184,7 +184,7 @@ public class ConversionUtils {
 			long updatedTime = System.currentTimeMillis();
 			long createdTime = location.getCreatedTime();
 			String createdBy = location.getCreatedBy();
-			return new Locations(locationDto.getId(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(),createdBy, createdTime, updatedBy, updatedTime);
+			return new Locations(locationDto.getId(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(),createdBy, createdTime, updatedBy, updatedTime, false);
 		}
 		public static String convertTimestampToWeek(long timestamp)
 	    {
@@ -196,6 +196,14 @@ public class ConversionUtils {
 			return String.valueOf(mont)+"-"+String.valueOf(year)+"("+String.valueOf(weekNo)+")";
 	    }
 	    
+		public static String  convertTimestampToWeekNo(long timestamp)
+		{
+			Calendar cal = GregorianCalendar.getInstance();
+			cal.setTimeInMillis(System.currentTimeMillis());
+			int weekNo = cal.get(Calendar.WEEK_OF_MONTH);
+			return String.valueOf(weekNo);
+
+		} 
 	    public static String convertTimestampToMonth(long timestamp)
 	    {
 	    	Calendar cal = GregorianCalendar.getInstance();

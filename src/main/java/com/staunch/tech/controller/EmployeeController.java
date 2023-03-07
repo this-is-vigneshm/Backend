@@ -53,4 +53,13 @@ public class EmployeeController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 		
 	}
+    
+    @PutMapping("/status/{empId}")
+	public ResponseEntity<ApiResponseDto> updateEmployeeStatus(@PathVariable("empId") int empId,
+			@RequestBody EmployeeUpdateReqDto updateEmployeeStatusDto) {
+		var response = new ApiResponseDto("1200", "Success",
+				employeeService.updateEmployeeStatus(empId, updateEmployeeStatusDto));
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+    
 }

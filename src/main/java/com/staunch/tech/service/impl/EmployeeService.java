@@ -10,8 +10,6 @@ import com.staunch.tech.service.IEmployeeService;
 import com.staunch.tech.utils.ConversionUtils;
 import com.staunch.tech.utils.ValidationUtils;
 
-import net.bytebuddy.implementation.bytecode.Throw;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService implements IEmployeeService {
@@ -81,6 +78,22 @@ public class EmployeeService implements IEmployeeService {
 		}
 	}
 
+	@Override
+	public EmployeeRespDto updateEmployeeStatus(int id, EmployeeUpdateReqDto employeeUpdateReqDto) {
+		var employeeOpt = employeeRepository.findById(id);
+		if (employeeOpt.isEmpty()) {
+			throw new AssetManagementException("Employee Id is Invalid");
+		}
+		var userOpt = employeeRepository.findById(employeeUpdateReqDto.getUserId());
+		if (userOpt.isEmpty()) {
+			throw new AssetManagementException("User Id is Invalid!");
+		}
+		var employee = employeeOpt.get();
+		employee.setStatus(employeeUpdateReqDto.getStatus());
+		System.out.print(employee.getStatus());
+		return ConversionUtils.convertEntityToDto(employeeRepository.save(employee));
+	}
+
 	/**
 	 * @param id
 	 * @return
@@ -109,6 +122,28 @@ public class EmployeeService implements IEmployeeService {
 		}
 		return employeeDtoList;
 	}
+
+	@Override
+	public List<EmployeeRespDto> getAllEmployeesByStatus(String status) {
+		var employeeList = employeeRepository.findByStatus(status);
+		if (employeeList.isEmpty()) {
+			throw new AssetManagementException("Ticket List is Empty");
+		}
+		var employeeDtoList = new ArrayList<EmployeeRespDto>();
+		for (Employee emp : employeeList) {
+			employeeDtoList.add(ConversionUtils.convertEntityToDto(emp));
+		}
+		return employeeDtoList;
+	}
+
+	public String deleteEmployee(int id) {
+		var employeeOpt = employeeRepository.findById(id);
+		if (employeeOpt.isEmpty()) {
+			throw new AssetManagementException("Employee id is Invalid");
+		}
+		employeeRepository.deleteById(id);
+		return "Employee with id : " + id + " deleted successfully";
+	}
 	@Override
 	public List<EmployeeRespDto> getAllEmployeesByUserType(String usertype) {
 		var employeeList = employeeRepository.findByUsertype(usertype);
@@ -123,6 +158,7 @@ public class EmployeeService implements IEmployeeService {
 	}
 
 }
+
 
 //	/**
 //	 * @param username

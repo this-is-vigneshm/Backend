@@ -36,8 +36,9 @@ public class EmployeeDto {
     private  String usertype;
     @NotBlank(message = "resource planner is Empty")
     private  String resourceplanner;
+    private String status;
     @NotBlank(message = "Password is Empty")
     private  String password;
-   
+
    
 }

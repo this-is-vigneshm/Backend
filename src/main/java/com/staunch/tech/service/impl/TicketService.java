@@ -164,7 +164,7 @@ public class TicketService implements ITicketService {
        ticket.setUpdatedBy(userOpt.get().getName());
        ticket.setUpdatedTime(System.currentTimeMillis());
        var updatedTicket = ConversionUtils.convertEntityToRespDto(ticketRepository.save(ticket));
-       var uTicket = ConversionUtils.convertTimestampToWeek(updatedTicket.getCreatedTime());
+       var uTicket = ConversionUtils.convertTimestampToWeekNo(updatedTicket.getCreatedTime());
        var mReport = ConversionUtils.convertTimestampToMonth(updatedTicket.getCreatedTime());
        if(ticket.getTotalCost()>0) {
 	       reportsRepo.save(new Reports2D(updateTicketStatusDto.getId(),"colour", ticket.getCategory(), ticket.getTotalCost(),ticket));
@@ -202,7 +202,7 @@ public class TicketService implements ITicketService {
         emailService.sendSimpleMail(emailDetails);
 //        return ConversionUtils.convertEntityToRespDto(ticketRepository.save(updatedTicket));
         var updateTicket = ConversionUtils.convertEntityToRespDto(ticketRepository.save(updatedTicket));
-        var uTicket = ConversionUtils.convertTimestampToWeek(updatedTicket.getCreatedTime());
+        var uTicket = ConversionUtils.convertTimestampToWeekNo(updatedTicket.getCreatedTime());
         var mReport = ConversionUtils.convertTimestampToMonth(updatedTicket.getCreatedTime());
         if(ticket.getTotalCost() > 0) {
 	        reportsRepo.save(new Reports2D(ticketDto.getId(),"colour", ticket.getCategory(), ticket.getTotalCost(),ticket));

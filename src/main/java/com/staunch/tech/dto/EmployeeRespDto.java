@@ -22,6 +22,8 @@ public class EmployeeRespDto {
     private  String location;
     private  String usertype;
     private  String resourceplanner;
+    private String status;
+    private boolean expand;
     private String password;
-  
+   
 }

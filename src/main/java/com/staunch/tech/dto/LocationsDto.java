@@ -16,7 +16,7 @@ public class LocationsDto {
 	@NotNull(message = "Id id empty")
 	private int id;
 	
-	@NotBlank(message = "Name id empty")
+	@NotBlank(message = "Name is empty")
 	private String name;
 	
 	private String description;
@@ -35,6 +35,6 @@ public class LocationsDto {
     private String postalCode;
     @NotBlank(message = "country id empty")
     private String country;
-    @NotBlank(message = "userId id empty")
+    @NotNull(message = "userId id empty")
 	private int userId;
 }

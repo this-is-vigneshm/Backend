@@ -44,10 +44,14 @@ public class Employee {
     private  String usertype;
     @Column(name = "resourceplanner", nullable = false)
     private  String resourceplanner;
+   
+    @Column(name ="status")
+    private String status;
     @Column(name = "password", nullable = false)
     private  String password;
-   
     
+
+
     
     @Column(name ="created_by")
     private String createdBy;
@@ -57,5 +61,7 @@ public class Employee {
     private String updatedBy;
     @Column(name ="updated_time")
     private long updatedTime;
-
+    
+    @Transient
+    private boolean expand;
 }

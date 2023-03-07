@@ -15,18 +15,7 @@ public class EmployeeUpdateReqDto {
 
     @NotNull
     private  int id;
-    private  String name;
-    private  String email;
-    private  String username;
-    private  Long phoneNumber;
-    private String department;
-    private String designation;
-    private Set<String> roles;
-    private String address;
-    private String location;
-    private String usertype;
-    private String resourceplanner;
-    private String password;
+    private String status;
     @NotNull(message="user id Empty")
     private int userId;
 }
