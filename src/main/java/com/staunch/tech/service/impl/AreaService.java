@@ -24,7 +24,7 @@ public class AreaService implements IAreaService {
 	
 	@Override
 	public Area createArea(AreaDto areaDto) {
-		var floor = floorRepository.findByName(areaDto.getFloorName());
+		var floor = floorRepository.findById(areaDto.getFloorId());
 		return areaRepository.save(new Area(areaDto.getId(),areaDto.getName(), floor.get()));
 	}
 

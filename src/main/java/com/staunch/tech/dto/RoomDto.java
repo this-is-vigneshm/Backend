@@ -18,5 +18,5 @@ public class RoomDto {
 	@NotBlank(message = "Room Name is Empty")
 	private String name;
 	
-	private String floorName;
+	private int floorId;
 }

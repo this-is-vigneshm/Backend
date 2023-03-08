@@ -32,7 +32,7 @@ public class BuildingService implements IBuildingService {
 	@Override
 	public Building createBuilding(BuildingDto buildingDto) {
 		
-		var location = locationRepository.findByName(buildingDto.getLocationName());
+		var location = locationRepository.findById(buildingDto.getLocationId());
 		return buildingRepository.save(new Building(buildingDto.getId(),buildingDto.getName(), location.get()));
 	}
 

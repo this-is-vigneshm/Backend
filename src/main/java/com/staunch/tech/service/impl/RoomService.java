@@ -24,7 +24,7 @@ public class RoomService implements IRoomService {
 	
 	@Override
 	public Room createRoom(RoomDto roomDto) {
-		var floor = floorRepository.findByName(roomDto.getFloorName());
+		var floor = floorRepository.findById(roomDto.getFloorId());
 		return roomRepository.save(new Room(roomDto.getId(),roomDto.getName(), floor.get()));
 	}
 

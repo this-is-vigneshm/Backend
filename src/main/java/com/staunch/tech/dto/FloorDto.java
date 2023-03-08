@@ -18,6 +18,6 @@ public class FloorDto {
 	@NotBlank(message = "Floor Name is Empty")
 	private String name;
 	
-	private String buildingName;
+	private int buildingId;
 	
 }

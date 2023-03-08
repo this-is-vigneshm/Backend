@@ -25,7 +25,7 @@ public class FloorService implements IFloorService {
 	
 	@Override
 	public Floor createFloor(FloorDto floorDto) {
-		var building = buildingRepository.findByName(floorDto.getBuildingName());
+		var building = buildingRepository.findById(floorDto.getBuildingId());
 		return floorRepository.save(new Floor(floorDto.getId(),floorDto.getName(), building.get()));
 	}
 

@@ -19,5 +19,5 @@ public class AreaDto {
 	@NotBlank(message = "Area Name is Empty")
 	private String name;
 	
-	private String floorName;
+	private int floorId;
 }

@@ -18,7 +18,7 @@ public class BuildingDto {
 	@NotBlank(message = "Building Name is Empty")
 	private String name;
 	
-	private String locationName;
+	private int locationId;
 	
 
 }
