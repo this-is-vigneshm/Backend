@@ -12,7 +12,7 @@ public interface IBuildingService {
 	Building createBuilding(BuildingDto buildingDto);
 	Building getBuilding(int id);
 	String deleteBuilding(int buildingId);
-	List<Building> getAllBuildingByLocation(String buildingName);
+	List<Building> getAllBuildingByLocation(int id);
     List<Building> getAllBuildings();
     
 }

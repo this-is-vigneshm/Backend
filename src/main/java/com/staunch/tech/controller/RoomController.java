@@ -41,8 +41,8 @@ public class RoomController {
 	}
 
 	@GetMapping("floor/{floor}")
-	public ResponseEntity<ApiResponseDto> listFloorByBuilding(@PathVariable("floor") String buildingName) {
-		var response = new ApiResponseDto("1200", "Success", roomService.getAllRoomByFloor(buildingName));
+	public ResponseEntity<ApiResponseDto> listFloorByBuilding(@PathVariable("floor") int floorId) {
+		var response = new ApiResponseDto("1200", "Success", roomService.getAllRoomByFloor(floorId));
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	@GetMapping("/{roomId}")

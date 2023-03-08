@@ -48,10 +48,10 @@ public class RoomService implements IRoomService {
 	}
 
 	@Override
-	public List<Room> getAllRoomByFloor(String floorName) {
-		var roomList = roomRepository.findAll();
-		var roomListByBuilding = roomList.stream().filter(room->room.getFloor().getName().equals(floorName)).collect(Collectors.toList());
-		if (roomListByBuilding.isEmpty()) {
+	public List<Room> getAllRoomByFloor(int floorId) {
+		var floor = floorRepository.findById(floorId);
+		var roomList = roomRepository.findAllByFloor(floor.get());
+		if (roomList.isEmpty()) {
 			throw new AssetManagementException("Room List is Empty in the given Floor Name!");
 		}
 		return roomList;

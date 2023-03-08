@@ -4,9 +4,11 @@ import com.staunch.tech.dto.AssetByCsvDto;
 import com.staunch.tech.dto.AssetDto;
 import com.staunch.tech.entity.Asset;
 import com.staunch.tech.exception.AssetManagementException;
+import com.staunch.tech.repository.AreaRepository;
 import com.staunch.tech.repository.AssetRepository;
 import com.staunch.tech.repository.EmployeeRepository;
 import com.staunch.tech.repository.LocationRepository;
+import com.staunch.tech.repository.RoomRepository;
 import com.staunch.tech.service.IAssertService;
 import com.staunch.tech.utils.ConversionUtils;
 import com.staunch.tech.utils.ValidationUtils;
@@ -30,6 +32,12 @@ public class AssetService implements IAssertService {
 
 	@Autowired
 	private LocationRepository locationRepository;
+	
+	@Autowired
+	private AreaRepository areaRepository;
+	
+	@Autowired
+	private RoomRepository roomRepository;
 
 	@Autowired
 	private ValidationUtils validationUtils;
@@ -46,6 +54,8 @@ public class AssetService implements IAssertService {
 		try {
 			validationUtils.validate(assetDto);
 			var locationOpt = locationRepository.findByFacilityCode(assetDto.getFacilityCode());
+			var areaOpt = areaRepository.findById(assetDto.getAreaId());
+			var roomOpt = roomRepository.findById(assetDto.getRoomId());
 			if (locationOpt.isEmpty()) {
 				throw new AssetManagementException("The given Facility Code is Invalid");
 			}
@@ -53,7 +63,7 @@ public class AssetService implements IAssertService {
 			if (userOpt.isEmpty()) {
 				throw new AssetManagementException("User Id is Invalid!");
 			}
-			var asset = ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), userOpt.get().getName());
+			var asset = ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), areaOpt.get(), roomOpt.get(),userOpt.get().getName());
 			return assetRepository.save(asset);
 		} catch (DataIntegrityViolationException e) {
 			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
@@ -117,6 +127,8 @@ public class AssetService implements IAssertService {
 				throw new AssetManagementException("Asset id is Invalid");
 			}
 			var locationOpt = locationRepository.findByFacilityCode(assetDto.getFacilityCode());
+			var areaOpt = areaRepository.findById(assetDto.getAreaId());
+			var roomOpt = roomRepository.findById(assetDto.getRoomId());
 			if (locationOpt.isEmpty()) {
 				throw new AssetManagementException("The given Facility Code is Invalid");
 			}
@@ -124,7 +136,7 @@ public class AssetService implements IAssertService {
 			if (userOpt.isEmpty()) {
 				throw new AssetManagementException("User Id is Invalid!");
 			}
-			var asset = ConversionUtils.convertDtoToUpdateEntity(assetDto, locationOpt.get(), userOpt.get().getName(),
+			var asset = ConversionUtils.convertDtoToUpdateEntity(assetDto, locationOpt.get(), areaOpt.get(),roomOpt.get() ,userOpt.get().getName(),
 					assetOpt.get());
 			return assetRepository.save(asset);
 		} catch (DataIntegrityViolationException e) {
@@ -172,11 +184,13 @@ public class AssetService implements IAssertService {
 				assetDto.setPrice(Float.parseFloat(csvRecord.get("price").replaceAll("[^a-zA-Z0-9]", "")));
 				assetDto.setFacilityCode(csvRecord.get("facilityCode").replaceAll("[^a-zA-Z0-9]", ""));
 				var locationOpt = locationRepository.findByFacilityCode(assetDto.getFacilityCode());
+				var areaOpt = areaRepository.findById(assetDto.getAreaId());
+				var roomOpt = roomRepository.findById(assetDto.getRoomId());
 				if (locationOpt.isEmpty()) {
 					failedAssets.add(assetDto);
 					continue;
 				}
-				assets.add(ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), "Dhinesh"));
+				assets.add(ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), areaOpt.get(), roomOpt.get(), "Dhinesh"));
 			}
 			System.out.println(assets);
 			var savedRecords = assetRepository.saveAll(assets);

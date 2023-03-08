@@ -30,6 +30,10 @@ public class AssetDto {
     @NotBlank(message = "Facility Code is Empty")
 	private String facilityCode;
     
+    private int areaId;
+    
+    private int roomId;
+    
 	@NotBlank(message = "Category is Empty")
 	private String category;
 	

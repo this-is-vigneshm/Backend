@@ -47,10 +47,10 @@ public class BuildingService implements IBuildingService {
 	}
 
 	@Override
-	public List<Building> getAllBuildingByLocation(String name) {
-		var buildingList = buildingRepository.findAll();
-		var buildingListByLocation = buildingList.stream().filter(building -> building.getLocations().getName().equals(name)) .collect(Collectors.toList());
-		if (buildingListByLocation.isEmpty()) {
+	public List<Building> getAllBuildingByLocation(int id) {
+		var loc = locationRepository.findById(id);
+		var buildingList = buildingRepository.findAllByLocations(loc.get());
+		if (buildingList.isEmpty()) {
 			throw new AssetManagementException("Building List is Empty in the given Location!");
 		}
 		return buildingList;

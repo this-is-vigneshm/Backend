@@ -33,7 +33,17 @@ public class Asset {
     @JoinColumn(name = "facility_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
-  
+    
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "area_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Area area;
+    
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "room_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Room room;
+    
     @Column(name = "category")
     private String category;
     @Column(name = "department")

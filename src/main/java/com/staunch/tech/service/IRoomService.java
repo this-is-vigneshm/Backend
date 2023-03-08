@@ -10,6 +10,6 @@ public interface IRoomService {
 	Room createRoom(RoomDto roomDto);
 	Room getRoom(int roomId);
 	String deleteRoom(int roomId);
-	List<Room> getAllRoomByFloor(String floorName);
+	List<Room> getAllRoomByFloor(int floorId);
 	List<Room> getAllRoom();
 	}

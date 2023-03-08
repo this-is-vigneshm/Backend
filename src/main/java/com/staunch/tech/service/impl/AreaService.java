@@ -48,10 +48,10 @@ public class AreaService implements IAreaService {
 	}
 
 	@Override
-	public List<Area> getAllAreaByFloor(String floorName) {
-		var areaList = areaRepository.findAll();
-		var areaListByBuilding = areaList.stream().filter(area->area.getFloor().getName().equals(floorName)).collect(Collectors.toList());
-		if (areaListByBuilding.isEmpty()) {
+	public List<Area> getAllAreaByFloor(int floorId) {
+		var floor = floorRepository.findById(floorId);
+		var areaList = areaRepository.findAllByFloor(floor.get());
+		if (areaList.isEmpty()) {
 			throw new AssetManagementException("Area List is Empty in the given Location!");
 		}
 		return areaList;

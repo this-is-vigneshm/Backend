@@ -1,6 +1,7 @@
 package com.staunch.tech.utils;
 
 import com.staunch.tech.dto.*;
+import com.staunch.tech.entity.Area;
 import com.staunch.tech.entity.Asset;
 import com.staunch.tech.entity.Employee;
 import com.staunch.tech.entity.Inventory;
@@ -8,6 +9,7 @@ import com.staunch.tech.entity.KnowledgeRepo;
 import com.staunch.tech.entity.Location;
 import com.staunch.tech.entity.Locations;
 import com.staunch.tech.entity.Resource;
+import com.staunch.tech.entity.Room;
 import com.staunch.tech.entity.Ticket;
 import com.staunch.tech.entity.WorkOrder;
 
@@ -20,21 +22,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ConversionUtils {
 
-	public static Asset convertDtoToUpdateEntity(AssetDto assetDto, Location location, String updatedBy,
+	public static Asset convertDtoToUpdateEntity(AssetDto assetDto, Location location,  Area area, Room room, String updatedBy,
 			Asset existingAsset) {
 		long updatedTime = System.currentTimeMillis();
 		long createdTime = existingAsset.getCreatedTime();
 		String createdBy = existingAsset.getCreatedBy();
 		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
-				assetDto.getDescription(), location, assetDto.getCategory(), assetDto.getDepartment(),
+				assetDto.getDescription(), location, area, room, assetDto.getCategory(), assetDto.getDepartment(),
 				assetDto.getSubAsset(),assetDto.getSystem(), assetDto.getSupplier(),assetDto.getStatus(), assetDto.getPriority(),assetDto.getMake(), assetDto.getModel(),
 				assetDto.getPrice(), createdBy, createdTime, updatedBy, updatedTime, false);
 	}
 	
-	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location, String createdBy) {
+	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location , Area area, Room room,String createdBy) {
 		long createdTime = System.currentTimeMillis();
 		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
-				assetDto.getDescription(), location, assetDto.getCategory(), assetDto.getDepartment(),
+				assetDto.getDescription(), location, area, room, assetDto.getCategory(), assetDto.getDepartment(),
 				assetDto.getSubAsset(),assetDto.getSystem(), assetDto.getSupplier(),assetDto.getStatus(), assetDto.getPriority(),assetDto.getMake(), assetDto.getModel(),
 				assetDto.getPrice(), createdBy, createdTime, createdBy, createdTime, false);
 	}

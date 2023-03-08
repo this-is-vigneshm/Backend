@@ -41,7 +41,7 @@ public class BuildingController {
 	}
 
 	@GetMapping("/location/{location}")
-	public ResponseEntity<ApiResponseDto> listBuildingByLocation(@PathVariable("location") String location) {
+	public ResponseEntity<ApiResponseDto> listBuildingByLocation(@PathVariable("location") int location) {
 		var response = new ApiResponseDto("1200", "Success", buildingService.getAllBuildingByLocation(location));
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

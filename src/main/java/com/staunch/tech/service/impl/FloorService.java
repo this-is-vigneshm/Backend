@@ -36,14 +36,14 @@ public class FloorService implements IFloorService {
 			throw new AssetManagementException("Floor id is Invalid");
 		}
 		floorRepository.deleteById(floorId);
-		return "Building with id : " + floorId + " deleted successfully";
+		return "Floor with id : " + floorId + " deleted successfully";
 	}
 	@Override
-	public List<Floor> getAllFloorByBuilding(String buildingName) {
-		var floorList = floorRepository.findAll();
-		var floorListByBuilding = floorList.stream().filter(floor->floor.getBuilding().getName().equals(buildingName)).collect(Collectors.toList());
-		if (floorListByBuilding.isEmpty()) {
-			throw new AssetManagementException("Building List is Empty in the given Location!");
+	public List<Floor> getAllFloorByBuilding(int buildingId) {
+		var building =buildingRepository.findById(buildingId);
+		var floorList = floorRepository.findAllByBuilding(building.get());
+		if (floorList.isEmpty()) {
+			throw new AssetManagementException("Floor List is Empty in the given Location!");
 		}
 		return floorList;
 	}
@@ -52,7 +52,7 @@ public class FloorService implements IFloorService {
 	public List<Floor> getAllFloors() {
 		var floors = floorRepository.findAll();
 		if (floors.isEmpty()) {
-			throw new AssetManagementException("Buildings List is Empty");
+			throw new AssetManagementException("Floor List is Empty");
 		}
 		return floors;
 	}

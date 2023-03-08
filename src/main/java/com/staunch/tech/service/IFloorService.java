@@ -12,6 +12,6 @@ public interface IFloorService {
 	Floor createFloor(FloorDto floorDto);
 	Floor getFloor(int floorId);
 	String deleteFloor(int floorId);
-	List<Floor> getAllFloorByBuilding(String BuildingName);
+	List<Floor> getAllFloorByBuilding(int buildingId);
     List<Floor> getAllFloors();
 }
