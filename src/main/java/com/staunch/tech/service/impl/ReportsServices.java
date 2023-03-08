@@ -139,7 +139,7 @@ public class ReportsServices implements IReports{
 		label.addAll(Arrays.asList("A safety hazard", "Minor Repair", "Major Repair", "Replacement Required"));
 		for(var i:label)
 		{
-			List<String> type = new ArrayList<String>();
+			List<Integer> type = new ArrayList<Integer>();
 			List<Long> value = new ArrayList<Long>();
 			List<Long> no = new ArrayList<Long>();
 			int aa = 0;
@@ -156,7 +156,7 @@ public class ReportsServices implements IReports{
 						n+=1;
 					}
 				}
-				type.add(bb,j);
+				type.add(bb,Integer.parseInt(j));
 				value.add(bb,temp);
 				no.add(bb++,n);
 			}
