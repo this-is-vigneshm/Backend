@@ -156,6 +156,14 @@ public class EmployeeService implements IEmployeeService {
 		}
 		return employeeDtoList;
 	}
+	
+	public String registerAllEmployee(List<EmployeeDto> multireg){
+		
+		for(var i : multireg) {
+			employeeRepository.save( ConversionUtils.convertDtoToNewEntity(i, "Srinath"));
+		}
+		return "SUCCESS";
+	}
 
 }
 

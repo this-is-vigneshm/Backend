@@ -22,21 +22,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ConversionUtils {
 
-	public static Asset convertDtoToUpdateEntity(AssetDto assetDto, Location location,  Area area, Room room, String updatedBy,
+	public static Asset convertDtoToUpdateEntity(AssetDto assetDto, Location location,  String updatedBy,
 			Asset existingAsset) {
 		long updatedTime = System.currentTimeMillis();
 		long createdTime = existingAsset.getCreatedTime();
 		String createdBy = existingAsset.getCreatedBy();
 		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
-				assetDto.getDescription(), location, area, room, assetDto.getCategory(), assetDto.getDepartment(),
+				assetDto.getDescription(), location, assetDto.getAreaId(), assetDto.getRoomId(),assetDto.getCategory(), assetDto.getDepartment(),
 				assetDto.getSubAsset(),assetDto.getSystem(), assetDto.getSupplier(),assetDto.getStatus(), assetDto.getPriority(),assetDto.getMake(), assetDto.getModel(),
 				assetDto.getPrice(), createdBy, createdTime, updatedBy, updatedTime, false);
 	}
 	
-	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location , Area area, Room room,String createdBy) {
+	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location , String createdBy) {
 		long createdTime = System.currentTimeMillis();
 		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
-				assetDto.getDescription(), location, area, room, assetDto.getCategory(), assetDto.getDepartment(),
+				assetDto.getDescription(), location, assetDto.getAreaId(), assetDto.getRoomId(), assetDto.getCategory(), assetDto.getDepartment(),
 				assetDto.getSubAsset(),assetDto.getSystem(), assetDto.getSupplier(),assetDto.getStatus(), assetDto.getPriority(),assetDto.getMake(), assetDto.getModel(),
 				assetDto.getPrice(), createdBy, createdTime, createdBy, createdTime, false);
 	}

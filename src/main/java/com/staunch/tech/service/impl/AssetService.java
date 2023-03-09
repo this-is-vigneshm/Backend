@@ -54,8 +54,6 @@ public class AssetService implements IAssertService {
 		try {
 			validationUtils.validate(assetDto);
 			var locationOpt = locationRepository.findByFacilityCode(assetDto.getFacilityCode());
-			var areaOpt = areaRepository.findById(assetDto.getAreaId());
-			var roomOpt = roomRepository.findById(assetDto.getRoomId());
 			if (locationOpt.isEmpty()) {
 				throw new AssetManagementException("The given Facility Code is Invalid");
 			}
@@ -63,7 +61,7 @@ public class AssetService implements IAssertService {
 			if (userOpt.isEmpty()) {
 				throw new AssetManagementException("User Id is Invalid!");
 			}
-			var asset = ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), areaOpt.get(), roomOpt.get(),userOpt.get().getName());
+			var asset = ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(),userOpt.get().getName());
 			return assetRepository.save(asset);
 		} catch (DataIntegrityViolationException e) {
 			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
@@ -127,8 +125,6 @@ public class AssetService implements IAssertService {
 				throw new AssetManagementException("Asset id is Invalid");
 			}
 			var locationOpt = locationRepository.findByFacilityCode(assetDto.getFacilityCode());
-			var areaOpt = areaRepository.findById(assetDto.getAreaId());
-			var roomOpt = roomRepository.findById(assetDto.getRoomId());
 			if (locationOpt.isEmpty()) {
 				throw new AssetManagementException("The given Facility Code is Invalid");
 			}
@@ -136,7 +132,7 @@ public class AssetService implements IAssertService {
 			if (userOpt.isEmpty()) {
 				throw new AssetManagementException("User Id is Invalid!");
 			}
-			var asset = ConversionUtils.convertDtoToUpdateEntity(assetDto, locationOpt.get(), areaOpt.get(),roomOpt.get() ,userOpt.get().getName(),
+			var asset = ConversionUtils.convertDtoToUpdateEntity(assetDto, locationOpt.get(),userOpt.get().getName(),
 					assetOpt.get());
 			return assetRepository.save(asset);
 		} catch (DataIntegrityViolationException e) {
@@ -184,13 +180,11 @@ public class AssetService implements IAssertService {
 				assetDto.setPrice(Float.parseFloat(csvRecord.get("price").replaceAll("[^a-zA-Z0-9]", "")));
 				assetDto.setFacilityCode(csvRecord.get("facilityCode").replaceAll("[^a-zA-Z0-9]", ""));
 				var locationOpt = locationRepository.findByFacilityCode(assetDto.getFacilityCode());
-				var areaOpt = areaRepository.findById(assetDto.getAreaId());
-				var roomOpt = roomRepository.findById(assetDto.getRoomId());
 				if (locationOpt.isEmpty()) {
 					failedAssets.add(assetDto);
 					continue;
 				}
-				assets.add(ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), areaOpt.get(), roomOpt.get(), "Dhinesh"));
+				assets.add(ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), "Dhinesh"));
 			}
 			System.out.println(assets);
 			var savedRecords = assetRepository.saveAll(assets);

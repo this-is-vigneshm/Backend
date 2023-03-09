@@ -127,9 +127,8 @@ public class ReportsServices implements IReports{
 	}  
 	
 	public List<BubbleChartDto> calculateBubbleReport() {
-		var a = reports3Repo.findAllByType("radar");		
+		var a = reports3Repo.findAllByType("bubble");		
 		List<BubbleChartDto> reports = new ArrayList<BubbleChartDto>();
-		int pos = 0;
 		Set<String> labels= new HashSet<>();
 		for(var i : a)
 		{
@@ -139,10 +138,10 @@ public class ReportsServices implements IReports{
 		label.addAll(Arrays.asList("A safety hazard", "Minor Repair", "Major Repair", "Replacement Required"));
 		for(var i:label)
 		{
-			List<Integer> type = new ArrayList<Integer>();
+			List<Long> type = new ArrayList<Long>();
 			List<Long> value = new ArrayList<Long>();
 			List<Long> no = new ArrayList<Long>();
-			int aa = 0;
+			String o = new String();
 			int bb=0;
 			for(var j:labels)
 			{
@@ -150,19 +149,22 @@ public class ReportsServices implements IReports{
 				long n = 0;
 				for(var k:a)
 				{
-					if(i.contains(k.getLabel()) && j.contains(k.getLabels()))
+					if(i.equals(k.getLabel()) && j.equals(k.getLabels()))
 					{
 						temp=temp+k.getValues();
 						n+=1;
+						o =k.getLabel();
 					}
+				
 				}
-				type.add(bb,Integer.parseInt(j));
+				type.add(bb,Long.parseLong(j));
 				value.add(bb,temp);
 				no.add(bb++,n);
 			}
-			reports.add(pos++,new BubbleChartDto(i, type, value,no));
+			if(i.equals(o)) {
+				reports.add(new BubbleChartDto(o, type, value, no));}
 		}
 		return reports;
-	}  
+	}
 }
 

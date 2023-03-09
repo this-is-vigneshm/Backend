@@ -24,7 +24,7 @@ public interface IEmployeeService {
 	List<EmployeeRespDto> getAllEmployeesByStatus(String status);
 	List<EmployeeRespDto> getAllEmployeesByUserType(String usertype);
 	
-
+	String registerAllEmployee(List<EmployeeDto> multireg);
 	
 
 }

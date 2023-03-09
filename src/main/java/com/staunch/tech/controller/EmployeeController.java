@@ -4,6 +4,9 @@ import com.staunch.tech.dto.ApiResponseDto;
 import com.staunch.tech.dto.EmployeeDto;
 import com.staunch.tech.dto.EmployeeUpdateReqDto;
 import com.staunch.tech.service.IEmployeeService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +64,13 @@ public class EmployeeController {
 				employeeService.updateEmployeeStatus(empId, updateEmployeeStatusDto));
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+    
+    
+    @PostMapping("/saveAll")
+    public ResponseEntity<ApiResponseDto> addEmployee(@RequestBody List<EmployeeDto> multireg) {
+        var response = new ApiResponseDto("1200","Success", employeeService.registerAllEmployee(multireg));
+        return new ResponseEntity<>(response,
+                HttpStatus.ACCEPTED);
+    }
     
 }
