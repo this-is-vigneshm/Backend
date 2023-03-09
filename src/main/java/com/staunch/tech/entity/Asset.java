@@ -34,15 +34,13 @@ public class Asset {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
     
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
-    @JoinColumn(name = "area_id", nullable = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Area area;
+
+    @Column(name ="area_id")
+    private int area;
     
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
-    @JoinColumn(name = "room_id", nullable = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Room room;
+
+    @Column(name ="room_id")
+    private int room;
     
     @Column(name = "category")
     private String category;

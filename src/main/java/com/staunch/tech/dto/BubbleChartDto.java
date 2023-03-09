@@ -13,7 +13,7 @@ public class BubbleChartDto {
 
 	private String category;
 
-	private List<Integer> label;
+	private List<Long> label;
 
 	private List<Long> values;
 	
