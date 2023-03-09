@@ -16,17 +16,8 @@ public interface IWorkOrderService {
 //	List<WorkOrderRespDto> getAllWorkOrderByStatus(String Status);
 //	
 //	WorkOrderRespDto updateWorkOrderStatus(UpdateWorkOrderStatusDto updateWorkOrderstatusDto);
-//	WorkOrderRespDto updateWorkOrder(int workorderorderNo,WorkOrderDto workorderDto) throws IOException;
+	WorkOrderRespDto updateWorkOrder(int workorderorderNo,WorkOrderDto workorderDto, MultipartFile file) throws IOException;
 	String deleteWorkOrder(int workorderorderNo);
-	byte[] downloadImage(int id);
-
-	
-	
-	
-	
-
-	
-	
-	
+	byte[] downloadImage(int id);	
 
 }

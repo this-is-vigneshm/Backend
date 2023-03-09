@@ -9,5 +9,6 @@ public interface ILocationService {
     Location createFacility(Location facility);
     Location deleteFacility(long facilityId);
     List<Location> getAllFacilities();
+    String createMultiFacility(List<Location> facility);
 
 }

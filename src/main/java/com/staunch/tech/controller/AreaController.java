@@ -1,5 +1,7 @@
 package com.staunch.tech.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +52,11 @@ public class AreaController {
 	public ResponseEntity<ApiResponseDto> getAreaById(@PathVariable("areaId") int areaId) {
 		var response = new ApiResponseDto("1200", "Success", areaService.getArea(areaId));
 		return new ResponseEntity<>(response, HttpStatus.FOUND);
+	}
+	
+	@PostMapping("/saveAll")
+	public ResponseEntity<ApiResponseDto> addMultiArea(@RequestBody List<AreaDto> areaDto) {
+		var response = new ApiResponseDto("1200", "Success",areaService.createMultiArea(areaDto));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 }

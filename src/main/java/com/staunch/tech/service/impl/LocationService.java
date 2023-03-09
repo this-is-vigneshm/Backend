@@ -76,4 +76,18 @@ public class LocationService implements ILocationService {
 		}
 		return facilities;
 	}
+
+	@Override
+	public String createMultiFacility(List<Location> facility) {
+		for(var i:facility)
+		{
+			var userOpt = employeeRepository.findById(i.getUserId());
+			i.setCreatedBy(userOpt.get().getName());
+			i.setCreatedTime(System.currentTimeMillis());
+			i.setLastUpdatedBy(userOpt.get().getName());
+			i.setLastUpdatedTime(System.currentTimeMillis());
+			locationRepository.save(i);
+		}
+		return "Success";
+	}
 }

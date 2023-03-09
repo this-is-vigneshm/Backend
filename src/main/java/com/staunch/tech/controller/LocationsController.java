@@ -1,5 +1,7 @@
 package com.staunch.tech.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +60,12 @@ public class LocationsController {
 	public ResponseEntity<ApiResponseDto> getLocByCode(@PathVariable("facCode") String facCode) {
 		var response = new ApiResponseDto("1200", "Success", locationSevice.findByCode(facCode));
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@PostMapping("/saveAll")
+	public ResponseEntity<ApiResponseDto> addLoc(@RequestBody List<LocationsDto> locationDto) {
+		var response = new ApiResponseDto("1200", "Success", locationSevice.createMultiLocation(locationDto));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 
 }

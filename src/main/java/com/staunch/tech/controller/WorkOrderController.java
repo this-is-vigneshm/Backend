@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -103,5 +104,18 @@ public class WorkOrderController {
         var response = new ApiResponseDto("1200", "Success",workorderservice.deleteWorkOrder(workorderorderNo));
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+	
+	@PutMapping("/{orderNo}")
+	 public ResponseEntity<ApiResponseDto> addDetails1( 
+		        @RequestParam("workorder") String workOrderObj,
+		        @Param("file") MultipartFile file) throws IOException {
+		    var workorderDto = objectMapper.readValue(workOrderObj, WorkOrderDto.class);
+		    WorkOrderRespDto data;
+		    System.out.println("File "+ file);
+		    System.out.println("File "+  file.getOriginalFilename());
+		    data = workorderservice.createWorkOrder(workorderDto, file);
+		    var response = new ApiResponseDto("1200", "Success", data);
+		    return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+			}
 
 }

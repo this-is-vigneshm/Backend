@@ -5,6 +5,9 @@ import com.staunch.tech.dto.EmployeeRespDto;
 import com.staunch.tech.dto.EmployeeUpdateReqDto;
 import com.staunch.tech.entity.Location;
 import com.staunch.tech.service.ILocationService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +38,13 @@ public class LocationController {
     public ResponseEntity<ApiResponseDto> getAllFacilities(
             @PathVariable("facilityId") long facilityId) {
         var response = new ApiResponseDto("1200", "Success",locationService.deleteFacility(facilityId));
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
+    @PostMapping("/saveAll")
+    public ResponseEntity<ApiResponseDto> createMultiFacility(
+            @RequestBody List<Location> facility) {
+        var response = new ApiResponseDto("1200", "Success",locationService.createMultiFacility(facility));
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 }

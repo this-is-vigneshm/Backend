@@ -1,5 +1,7 @@
 package com.staunch.tech.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,23 +27,23 @@ public class RoomController {
 	private RoomService roomService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<ApiResponseDto> addFloor(@RequestBody RoomDto roomDto) {
+	public ResponseEntity<ApiResponseDto> addRoom(@RequestBody RoomDto roomDto) {
 		var response = new ApiResponseDto("1200", "Success",roomService.createRoom(roomDto));
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	@GetMapping("/list")
-	public ResponseEntity<ApiResponseDto> listFloor() {
+	public ResponseEntity<ApiResponseDto> listRoom() {
 		var response = new ApiResponseDto("1200", "Success", roomService.getAllRoom());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	@DeleteMapping("/{roomId}")
-	public ResponseEntity<ApiResponseDto> deleteFloor(@PathVariable("roomId") int roomId) {
+	public ResponseEntity<ApiResponseDto> deleteRoom(@PathVariable("roomId") int roomId) {
 		var response = new ApiResponseDto("1200", "Success", roomService.deleteRoom(roomId));
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("floor/{floor}")
-	public ResponseEntity<ApiResponseDto> listFloorByBuilding(@PathVariable("floor") int floorId) {
+	public ResponseEntity<ApiResponseDto> listRoomByFloor(@PathVariable("floor") int floorId) {
 		var response = new ApiResponseDto("1200", "Success", roomService.getAllRoomByFloor(floorId));
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -49,5 +51,11 @@ public class RoomController {
 	public ResponseEntity<ApiResponseDto> getItemById(@PathVariable("roomId") int roomId) {
 		var response = new ApiResponseDto("1200", "Success", roomService.getRoom(roomId));
 		return new ResponseEntity<>(response, HttpStatus.FOUND);
+	}
+	
+	@PostMapping("/saveAll")
+	public ResponseEntity<ApiResponseDto> addMultiRoom(@RequestBody List<RoomDto> roomDto) {
+		var response = new ApiResponseDto("1200", "Success",roomService.createMultiRoom(roomDto));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 }

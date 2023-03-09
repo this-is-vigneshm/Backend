@@ -12,4 +12,5 @@ public interface IRoomService {
 	String deleteRoom(int roomId);
 	List<Room> getAllRoomByFloor(int floorId);
 	List<Room> getAllRoom();
+	String createMultiRoom(List<RoomDto> roomDto);
 	}

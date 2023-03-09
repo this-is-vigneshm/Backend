@@ -66,4 +66,14 @@ public class AreaService implements IAreaService {
 		return area;
 	}
 
+	@Override
+	public String createMultiArea(List<AreaDto> areaDto) {
+		for(var i:areaDto)
+		{
+			var floor = floorRepository.findById(i.getFloorId());
+			areaRepository.save(new Area(i.getId(),i.getName(), floor.get()));
+		}
+		return "SUCCESS";
+	}
+
 }

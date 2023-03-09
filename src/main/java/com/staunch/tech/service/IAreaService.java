@@ -13,4 +13,5 @@ public interface IAreaService {
 	String deleteArea(int areaId);
 	List<Area> getAllAreaByFloor(int floorId);
 	List<Area> getAllArea();
+	String createMultiArea(List<AreaDto> areaDto);
 }

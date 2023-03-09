@@ -19,4 +19,6 @@ public interface ILocationsService {
 	List<Locations> findByCode(String facCode);
 	
 	String deleteLocationById(int locationId);
+	
+	String createMultiLocation(List<LocationsDto> locationDto);
 }

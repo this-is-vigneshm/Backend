@@ -101,4 +101,15 @@ public class LocationsService implements ILocationsService {
 		locationRepository.deleteById(locationId);
 		return "Item with id : " + locationId + " deleted successfully";
 	}
+
+
+	@Override
+	public String createMultiLocation(List<LocationsDto> locationDto) {
+		for(var i : locationDto)
+		{
+			var userOpt = employeeRepository.findById(i.getUserId());
+			locationRepository.save(ConversionUtils.convertDtoToNewEntity(i,userOpt.get().getName() ));
+		}
+		return "Success";
+	}
 }

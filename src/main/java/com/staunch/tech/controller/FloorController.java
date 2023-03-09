@@ -1,5 +1,7 @@
 package com.staunch.tech.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +51,11 @@ public class FloorController {
 	public ResponseEntity<ApiResponseDto> getItemById(@PathVariable("floorId") int floorId) {
 		var response = new ApiResponseDto("1200", "Success", floorService.getFloor(floorId));
 		return new ResponseEntity<>(response, HttpStatus.FOUND);
+	}
+	
+	@PostMapping("/saveAll")
+	public ResponseEntity<ApiResponseDto> addMultiFloor(@RequestBody List<FloorDto> floorDto) {
+		var response = new ApiResponseDto("1200", "Success",floorService.createMultiFloor(floorDto));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 }

@@ -65,4 +65,14 @@ public class FloorService implements IFloorService {
 		return floorOpt.get();
 	}
 
+	@Override
+	public String createMultiFloor(List<FloorDto> floorDto) {
+		for(var i:floorDto)
+		{
+			var building = buildingRepository.findById(i.getBuildingId());
+			floorRepository.save(new Floor(i.getId(),i.getName(), building.get()));
+		}
+		return "SUCCESS";
+	}
+
 }

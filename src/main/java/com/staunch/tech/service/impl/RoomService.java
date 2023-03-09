@@ -66,4 +66,14 @@ public class RoomService implements IRoomService {
 		return rooms;
 	}
 
+	@Override
+	public String createMultiRoom(List<RoomDto> roomDto) {
+		for(var i:roomDto)
+		{
+			var floor = floorRepository.findById(i.getFloorId());
+			roomRepository.save(new Room(i.getId(),i.getName(), floor.get()));			
+		}
+		return "SUCCESS";
+	}
+
 }

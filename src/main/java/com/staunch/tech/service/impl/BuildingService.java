@@ -19,6 +19,7 @@ import com.staunch.tech.repository.BuildingRepository;
 import com.staunch.tech.repository.LocationsRepository;
 import com.staunch.tech.service.IBuildingService;
 import com.staunch.tech.service.ILocationsService;
+import com.staunch.tech.utils.ConversionUtils;
 
 @Service
 public class BuildingService implements IBuildingService {
@@ -72,6 +73,16 @@ public class BuildingService implements IBuildingService {
 			throw new AssetManagementException("Location Id is Invalid");
 		}
 		return buildingOpt.get();
+	}
+
+	@Override
+	public String createMultiBuilding(List<BuildingDto> buildingDto) {
+		for(var i:buildingDto)
+		{
+			var location = locationRepository.findById(i.getLocationId());
+			buildingRepository.save(new Building(i.getId(),i.getName(), location.get()));
+		}
+		return "SUCCESS";
 	}
 
 }

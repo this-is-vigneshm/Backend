@@ -195,5 +195,22 @@ public class WorkOrderService implements IWorkOrderService {
         workorderRepository.deleteById(workorderorderNo);
         return "Asset with id : " + workorderorderNo + " deleted successfully";
     }
+    
+    public WorkOrderRespDto updateWorkOrder(int workorderorderNo, WorkOrderDto workorderDto,MultipartFile file) throws IOException {
+		 if(workorderorderNo != workorderDto.getOrderNo()){
+           throw new AssetManagementException("WorkOrder orderNo in body is different from path");
+	            }
+	        var workorderOpt = workorderRepository.findById(workorderorderNo);
+	        if(workorderOpt.isEmpty()){
+	            throw new AssetManagementException("WorkOrder is Invalid");
+       }
+	        var userOpt = employeeRepository.findById(workorderDto.getEmployeeId());
+	        if(userOpt.isEmpty()){
+	            throw new AssetManagementException("User Id is Invalid!");
+	        }
+	        var employee = userOpt.get();
+	        var workorder = workorderOpt.get();
+	        var updatedWorkOrder = ConversionUtils.convertDtoToUpdateEntity(workorderDto,employee,employee.getName(),file, workorder);
+           return ConversionUtils.convertEntityToRespDto(workorderRepository.save(updatedWorkOrder));	}
 	
 }

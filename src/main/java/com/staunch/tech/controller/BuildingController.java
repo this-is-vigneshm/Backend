@@ -1,5 +1,7 @@
 package com.staunch.tech.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +51,11 @@ public class BuildingController {
 	public ResponseEntity<ApiResponseDto> getItemById(@PathVariable("buildingId") int buildingId) {
 		var response = new ApiResponseDto("1200", "Success", buildingService.getBuilding(buildingId));
 		return new ResponseEntity<>(response, HttpStatus.FOUND);
+	}
+	
+	@PostMapping("/saveAll")
+	public ResponseEntity<ApiResponseDto> addMultiBuilding(@RequestBody List<BuildingDto> buildingDto) {
+		var response = new ApiResponseDto("1200", "Success",buildingService.createMultiBuilding(buildingDto));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 }
