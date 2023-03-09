@@ -5,6 +5,7 @@ import com.staunch.tech.dto.AssetDto;
 import com.staunch.tech.entity.Asset;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IAssertService {
@@ -13,7 +14,8 @@ public interface IAssertService {
 	 * @param assetDto
 	 * @return
 	 */
-	Asset registerAsset(AssetDto assetDto);
+	Asset registerAsset(AssetDto assetDto, MultipartFile file) throws IOException;
+	
 
 	/**
 	 *
@@ -41,7 +43,7 @@ public interface IAssertService {
 	 * @param assetDto
 	 * @return
 	 */
-	Asset updateAsset(int assetId, AssetDto assetDto);
+	Asset updateAsset(int assetId, AssetDto assetDto, MultipartFile file) throws IOException;
 
 	/**
 	 *
@@ -56,6 +58,8 @@ public interface IAssertService {
 	 * @param userId
 	 * @return
 	 */
+	
+	byte[] downloadImage(int assetId);
 
-	AssetByCsvDto addAssetsByCsv(MultipartFile file, int userId);
+//	AssetByCsvDto addAssetsByCsv(MultipartFile file, int userId);
 }

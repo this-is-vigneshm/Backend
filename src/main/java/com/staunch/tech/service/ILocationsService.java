@@ -10,11 +10,13 @@ public interface ILocationsService {
 
 	Locations createLocation(LocationsDto locationsDto);
 	
-	Locations getLocation(int locationId);
+	List<Locations>  getLocation(int locationId);
 	
 	List<Locations> getAllLocations();
 	
 	Locations UpdateLocations(int locationId, LocationsDto locationsDto);
+	
+	List<Locations> findByCode(String facCode);
 	
 	String deleteLocationById(int locationId);
 }

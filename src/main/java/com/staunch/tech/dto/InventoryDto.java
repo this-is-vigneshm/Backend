@@ -32,6 +32,11 @@ public class InventoryDto {
 	@NotNull
 	private String status;
 	
+	private byte[] data;
+	
+    private String fileName;
+	
+	
 	@NotNull(message = "user id is Empty!")
 	private int userId;
 }

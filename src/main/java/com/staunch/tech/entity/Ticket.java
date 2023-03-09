@@ -33,6 +33,13 @@ public class Ticket {
     @Column(name = "workOrder_id")
     private int workOrderId;
     
+    @Lob
+	@Column(name = "data", nullable = true)
+	private byte[] data;
+	
+	@Column (name = "file_name", nullable = true)
+	private String fileName;
+    
     @Column(name ="created_by")
     private String createdBy;
     @Column(name ="created_time")

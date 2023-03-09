@@ -1,6 +1,11 @@
 package com.staunch.tech.controller;
 
+import java.io.IOException;
+
+import javax.mail.Multipart;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,12 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.staunch.tech.dto.ApiResponseDto;
-import com.staunch.tech.dto.AssetDto;
 import com.staunch.tech.dto.InventoryDto;
-import com.staunch.tech.service.IInventoryService;
+import com.staunch.tech.entity.Inventory;
+import com.staunch.tech.service.impl.InventoryService;
 
 @RestController
 @RequestMapping("/inventory")
@@ -24,12 +32,22 @@ import com.staunch.tech.service.IInventoryService;
 public class InventoryController {
 	
 	@Autowired
-	private IInventoryService inventoryService;
+	private InventoryService inventoryService;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@PostMapping("/save")
-	public ResponseEntity<ApiResponseDto> addItem(@RequestBody InventoryDto inventoryDto) {
-		var response = new ApiResponseDto("1200", "Success", inventoryService.createItem(inventoryDto));
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    public ResponseEntity<ApiResponseDto> addItems( 
+        @RequestParam("inventory") String inventoryObj,
+        @Param("file") MultipartFile file) throws IOException {
+    var inventoryDto = objectMapper.readValue(inventoryObj, InventoryDto.class);
+    Inventory data;
+    System.out.println("File "+ file);
+    System.out.println("File "+  file.getOriginalFilename());
+    data = inventoryService.createItem(inventoryDto, file);
+    var response = new ApiResponseDto("1200", "Success", data);
+    return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/list")

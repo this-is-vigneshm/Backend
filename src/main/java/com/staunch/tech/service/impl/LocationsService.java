@@ -1,5 +1,6 @@
 package com.staunch.tech.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +42,23 @@ public class LocationsService implements ILocationsService {
 	
 
 	@Override
-	public Locations getLocation(int locationId) {
+	public List<Locations> getLocation(int locationId) {
 		var locationOpt = locationRepository.findById(locationId);
 		if (locationOpt.isEmpty()) {
 			throw new AssetManagementException("Location Id is Invalid");
 		}
-		return locationOpt.get();
+		List<Locations> a = new ArrayList<Locations>(); 
+		a.add(locationOpt.get());
+		return a;
+	}
+	
+	@Override
+	public List<Locations> findByCode(String facCode){
+		var location = locationRepository.findByFacCode(facCode);
+		if(location.isEmpty()) {
+			throw new AssetManagementException("Facility Invalid");
+		}
+		return location;
 	}
 
 	@Override

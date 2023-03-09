@@ -64,6 +64,9 @@ public class AssetDto {
 	@NotNull(message = "Price is Empty")
 	private float price;
 	
+    private byte[] data;
+    private String fileName;
+	
 	@NotNull(message = "user id is Empty!")
 	private int userId;
 }

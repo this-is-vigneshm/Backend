@@ -22,23 +22,31 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ConversionUtils {
 
-	public static Asset convertDtoToUpdateEntity(AssetDto assetDto, Location location,  String updatedBy,
-			Asset existingAsset) {
+
+	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location, String name,
+			MultipartFile file) throws IOException {
+		long createdTime = System.currentTimeMillis();
+		byte[] data = ImageUtils.compressImage(file.getBytes());
+		String fileName = file.getOriginalFilename();
+		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
+				assetDto.getDescription(), location, assetDto.getAreaId(), assetDto.getRoomId(), assetDto.getCategory(), assetDto.getDepartment(),
+				assetDto.getSubAsset(), assetDto.getSystem(), assetDto.getSupplier(), assetDto.getStatus(),
+				assetDto.getPriority(), assetDto.getMake(), assetDto.getModel(), assetDto.getPrice(), data, fileName,
+				name, createdTime, name, createdTime, false);
+	}
+
+	public static Asset convertDtoToUpdateEntity(AssetDto assetDto, Location location, String updatedBy,
+			Asset existingAsset, MultipartFile file) throws IOException {
 		long updatedTime = System.currentTimeMillis();
 		long createdTime = existingAsset.getCreatedTime();
 		String createdBy = existingAsset.getCreatedBy();
-		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
-				assetDto.getDescription(), location, assetDto.getAreaId(), assetDto.getRoomId(),assetDto.getCategory(), assetDto.getDepartment(),
-				assetDto.getSubAsset(),assetDto.getSystem(), assetDto.getSupplier(),assetDto.getStatus(), assetDto.getPriority(),assetDto.getMake(), assetDto.getModel(),
-				assetDto.getPrice(), createdBy, createdTime, updatedBy, updatedTime, false);
-	}
-	
-	public static Asset convertDtoToNewEntity(AssetDto assetDto, Location location , String createdBy) {
-		long createdTime = System.currentTimeMillis();
+		var data = ImageUtils.compressImage(file.getBytes());
+		var name = file.getOriginalFilename();
 		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
 				assetDto.getDescription(), location, assetDto.getAreaId(), assetDto.getRoomId(), assetDto.getCategory(), assetDto.getDepartment(),
-				assetDto.getSubAsset(),assetDto.getSystem(), assetDto.getSupplier(),assetDto.getStatus(), assetDto.getPriority(),assetDto.getMake(), assetDto.getModel(),
-				assetDto.getPrice(), createdBy, createdTime, createdBy, createdTime, false);
+				assetDto.getSubAsset(), assetDto.getSystem(), assetDto.getSupplier(), assetDto.getStatus(),
+				assetDto.getPriority(), assetDto.getMake(), assetDto.getModel(), assetDto.getPrice(), data, name,
+				createdBy, createdTime, updatedBy, updatedTime, false);
 	}
 
     public static Employee convertDtoToNewEntity(EmployeeDto employeeDto, String createdBy) {
@@ -72,11 +80,20 @@ public class ConversionUtils {
         return new Employee(employee.getId(), employee.getName(),employee.getEmail(),employee.getUsername(),employee.getPhoneNumber(),employee.getDepartment(),employee.getDesignation(),  employee.getRoles(),employee.getAddress(),employee.getLocation(),employee.getUsertype(),employee.getResourceplanner(),employee.getStatus(),employee.getPassword(),
               createdBy, createdTime, updatedBy, updatedTime, false);
     }
-
-	public static Ticket convertDtoToNewEntity(TicketDto ticketDto, Employee employee, String createdBy) {
+    
+    public static Ticket convertDtoToNewEntity(TicketDto ticketDto, Employee employee, String createdBy){
 		long createdTime = System.currentTimeMillis();
 		return new Ticket(UUID.randomUUID().toString(), ticketDto.getTitle(), ticketDto.getDescription(),
-				ticketDto.getCategory(), "Open", employee, ticketDto.getIssueType(), ticketDto.getAssetId(),ticketDto.getWorkOrderId(), createdBy,
+				ticketDto.getCategory(), "Open", employee, ticketDto.getIssueType(), ticketDto.getAssetId(),ticketDto.getWorkOrderId(),ticketDto.getData(),ticketDto.getFileName(), createdBy,
+				createdTime, createdBy, createdTime, 0, 0, ticketDto.getExpectedCompletionTime());
+	}
+
+    public static Ticket convertDtoToNewEntity1(TicketDto ticketDto, Employee employee, String createdBy , MultipartFile file) throws IOException{
+		long createdTime = System.currentTimeMillis();
+		   var data = ImageUtils.compressImage(file.getBytes());
+	        var name =file.getOriginalFilename();
+		return new Ticket(UUID.randomUUID().toString(), ticketDto.getTitle(), ticketDto.getDescription(),
+				ticketDto.getCategory(), "Open", employee, ticketDto.getIssueType(), ticketDto.getAssetId(),ticketDto.getWorkOrderId(),data,name, createdBy,
 				createdTime, createdBy, createdTime, 0, 0, ticketDto.getExpectedCompletionTime());
 	}
 
@@ -86,15 +103,16 @@ public class ConversionUtils {
 		String createdBy = employee.getCreatedBy();
 		return new Ticket(ticketDto.getUuid(), ticketDto.getTitle(), ticketDto.getDescription(),
 				ticketDto.getCategory(), ticketDto.getStatus(), employee, ticketDto.getIssueType(),
-				ticketDto.getAssetId(), ticketDto.getWorkOrderId(),createdBy, createdTime, updatedBy, updatedTime, 0, 0,
+				ticketDto.getAssetId(), ticketDto.getWorkOrderId(),ticketDto.getData(),ticketDto.getFileName(),createdBy, createdTime, updatedBy, updatedTime, 0, 0,
 				ticketDto.getExpectedCompletionTime());
 	}
-
+	
 	public static TicketRespDto convertEntityToRespDto(Ticket ticket) {
+		byte[] images=ImageUtils.decompressImage(ticket.getData());
 		return new TicketRespDto(ticket.getUuid(), ticket.getTitle(), ticket.getDescription(), ticket.getCategory(),
 				ticket.getStatus(), ticket.getEmployeeId().getId(), ticket.getEmployeeId().getName(),
 				ticket.getEmployeeId().getEmail(), ticket.getEmployeeId().getDepartment(), ticket.getIssueType(),
-				ticket.getAssetId(), ticket.getWorkOrderId(),ticket.getCreatedBy(), ticket.getCreatedTime(), ticket.getUpdatedBy(),
+				ticket.getAssetId(), ticket.getWorkOrderId(),images, ticket.getFileName(),ticket.getCreatedBy(), ticket.getCreatedTime(), ticket.getUpdatedBy(),
 				ticket.getUpdatedTime(), ticket.getTimeTaken(), false, ticket.getExpectedCompletionTime());
 	}
 
@@ -160,10 +178,12 @@ public class ConversionUtils {
 	        		workorder.getUpdatedBy(),workorder.getUpdatedTime(),workorder.getTimeTaken(),false,workorder.getExpectedCompletionTime());
 	    }
 	 
-	 public static Inventory convertDtoToNewEntity(InventoryDto inventoryDto, String createdBy) {
+	 public static Inventory convertDtoToNewEntity(InventoryDto inventoryDto, String createdBy,MultipartFile file) throws IOException {
 			long createdTime = System.currentTimeMillis();
+			var data = ImageUtils.compressImage(file.getBytes());
+		    var name =file.getOriginalFilename();
 			return new Inventory(inventoryDto.getId(), inventoryDto.getName(), inventoryDto.getCode(),inventoryDto.getDescription(),
-					inventoryDto.getQuantity(), inventoryDto.getPrice(),inventoryDto.getStatus(),createdBy, createdTime, createdBy, createdTime,
+					inventoryDto.getQuantity(), inventoryDto.getPrice(),inventoryDto.getStatus(),data,name,createdBy, createdTime, createdBy, createdTime,
 					false);
 		}
 
@@ -173,12 +193,12 @@ public class ConversionUtils {
 			long createdTime = inventory.getCreatedTime();
 			String createdBy = inventory.getCreatedBy();
 			return new Inventory(inventoryDto.getId(), inventoryDto.getName(), inventoryDto.getCode(),inventoryDto.getDescription(),
-					inventoryDto.getQuantity(), inventoryDto.getPrice(),inventoryDto.getStatus(), createdBy, createdTime, updatedBy, updatedTime, false);
+					inventoryDto.getQuantity(), inventoryDto.getPrice(),inventoryDto.getStatus(),inventoryDto.getData(),inventoryDto.getFileName(), createdBy, createdTime, updatedBy, updatedTime, false);
 		}
 		
 		public static Locations convertDtoToNewEntity(LocationsDto locationDto, String createdBy) {
 			long createdTime = System.currentTimeMillis();
-			return new Locations(locationDto.getId(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(), createdBy, createdTime, createdBy, createdTime, false);
+			return new Locations(locationDto.getId(),locationDto.getFacCode(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(), createdBy, createdTime, createdBy, createdTime, false);
 		}
 
 		public static Locations convertDtoToUpdateEntity(LocationsDto locationDto, String updatedBy,
@@ -186,7 +206,7 @@ public class ConversionUtils {
 			long updatedTime = System.currentTimeMillis();
 			long createdTime = location.getCreatedTime();
 			String createdBy = location.getCreatedBy();
-			return new Locations(locationDto.getId(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(),createdBy, createdTime, updatedBy, updatedTime, false);
+			return new Locations(locationDto.getId(),locationDto.getFacCode(), locationDto.getName(), locationDto.getDescription(), locationDto.getAddressLine1(),locationDto.getAddressLine2(),locationDto.getAddressLine3(),locationDto.getCity(),locationDto.getState(),locationDto.getPostalCode(),locationDto.getCountry(),createdBy, createdTime, updatedBy, updatedTime, false);
 		}
 		public static String convertTimestampToWeek(long timestamp)
 	    {

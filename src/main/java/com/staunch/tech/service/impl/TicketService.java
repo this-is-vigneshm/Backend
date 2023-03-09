@@ -16,6 +16,7 @@ import com.staunch.tech.repository.TicketRepository;
 import com.staunch.tech.service.IEmailService;
 import com.staunch.tech.service.ITicketService;
 import com.staunch.tech.utils.ConversionUtils;
+import com.staunch.tech.utils.ImageUtils;
 import com.staunch.tech.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -26,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -217,20 +219,26 @@ public class TicketService implements ITicketService {
      * @return
      */
     @Override
-    public TicketRespDto sendMailWithAttachment(TicketDto ticketDto, MultipartFile file){
+    public TicketRespDto sendMailWithAttachment(TicketDto ticketDto, MultipartFile file) throws IOException{
         File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+file.getOriginalFilename());
+        MultipartFile a = file;
+       
+        validationUtils.validate(ticketDto);
+        var employeeOpt = employeeRepository.findById(ticketDto.getEmployeeId());
+        if(employeeOpt.isEmpty()){
+            throw new AssetManagementException("Employee Id is Invalid");
+        }
+        var userOpt = employeeRepository.findById(ticketDto.getEmployeeId());
+        if(userOpt.isEmpty()) {
+        	throw new AssetManagementException("Employee Id is Invalid");
+        }
+        var ticket = ConversionUtils.convertDtoToNewEntity1(ticketDto, employeeOpt.get(),userOpt.get().getName(), a);
         try {
             file.transferTo(convFile);
         } catch (IOException e) {
             e.printStackTrace();
             throw new AssetManagementException("Error While Handling the file." + e.getMessage());
         }
-        validationUtils.validate(ticketDto);
-        var employeeOpt = employeeRepository.findById(ticketDto.getEmployeeId());
-        if(employeeOpt.isEmpty()){
-            throw new AssetManagementException("Employee Id is Invalid");
-        }
-        var ticket = ConversionUtils.convertDtoToNewEntity(ticketDto, employeeOpt.get(), "Dhinesh");
         var employee = employeeOpt.get();
         var emailDetails = new EmailDetails(employee.getEmail(),employee.getName(), ticket.getDescription(), ticket.getTitle(), convFile);
         emailService.sendMailWithAttachment(emailDetails);
@@ -238,6 +246,12 @@ public class TicketService implements ITicketService {
         var currentWeek = ConversionUtils.convertTimestampToWeek(newTicket.getCreatedTime());
 		reportsRepo.save(new Reports2D(ticketDto.getId(),"weekly", currentWeek, 1,ticket));
         return newTicket;
+    }
+
+public byte[] downloadImage(String id){
+        Optional<Ticket> dbImageData = ticketRepository.findByUuid(id);
+        byte[] images=ImageUtils.decompressImage(dbImageData.get().getData());
+        return images;
     }
 
 	@Override
@@ -256,7 +270,7 @@ public class TicketService implements ITicketService {
 	@Override
 	public TicketRespDto addWOId(int workOrderId, String ticketId) {
 		var ticket = ticketRepository.findByUuid(ticketId);
-		ticket.get(0).setWorkOrderId(workOrderId);;
+		ticket.get().setWorkOrderId(workOrderId);;
 		return null;
 	} 
 }

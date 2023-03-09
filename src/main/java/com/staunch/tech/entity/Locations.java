@@ -23,6 +23,9 @@ public class Locations {
 	@Column(name = "location_id")
 	private int id;
 	
+	@Column(name = "facility_code")
+	private String facCode;
+	
 	@Column(name = "location_name")
 	private String name;
 	

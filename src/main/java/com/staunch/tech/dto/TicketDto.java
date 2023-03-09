@@ -33,6 +33,9 @@ public class TicketDto {
 	
 	private long totalAmountSpent;
 	
+	private byte[] data;
+    private String fileName;
+	
 
 	@NotNull(message = "user id is Empty!")
 	private int userId;

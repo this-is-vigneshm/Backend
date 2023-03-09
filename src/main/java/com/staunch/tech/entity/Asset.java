@@ -71,7 +71,12 @@ public class Asset {
    
     @Column(name ="price")
     private float price;
-
+    
+    @Lob
+	@Column(name = "fileData",length = 1000)
+	private byte[] data;
+    @Column (name = "file_name")
+	private String fileName;
     
     
     

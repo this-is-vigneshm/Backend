@@ -16,6 +16,9 @@ public class LocationsDto {
 	@NotNull(message = "Id id empty")
 	private int id;
 	
+	@NotBlank(message = "facCode is empty")
+	private String facCode;
+	
 	@NotBlank(message = "Name is empty")
 	private String name;
 	

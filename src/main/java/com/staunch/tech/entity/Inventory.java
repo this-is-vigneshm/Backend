@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -40,6 +41,13 @@ public class Inventory {
 	
 	@Column(name = "itemStatus")
 	private String status;
+	
+	@Lob
+	@Column(name = "data",length = 1000)
+	private byte[] data;
+	
+	@Column (name = "file_name")
+	private String fileName;
 	
 	
     @Column(name ="created_by")

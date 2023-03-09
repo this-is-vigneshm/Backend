@@ -11,7 +11,9 @@ import java.util.List;
 
 public interface ITicketService {
     TicketRespDto sendMail(TicketDto ticketDto);
-    TicketRespDto sendMailWithAttachment(TicketDto ticketDto, MultipartFile file);
+    TicketRespDto sendMailWithAttachment(TicketDto ticketDto, MultipartFile file) throws IOException;
+
+	
     TicketRespDto getTicketById(String id);
     List<TicketRespDto> getAllTickets();
     List<TicketRespDto> getAllTicketsByStatus(String status);
@@ -23,4 +25,5 @@ public interface ITicketService {
     List<TicketRespDto> getAllTicketsById(List<String> listId);
     
     TicketRespDto addWOId(int workOrderId, String ticketId);
+    byte[] downloadImage(String id);
 }

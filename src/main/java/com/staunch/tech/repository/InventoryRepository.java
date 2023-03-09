@@ -11,4 +11,5 @@ import com.staunch.tech.entity.Inventory;
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
 	Optional<Inventory> findByName(String name);
+	Optional<Inventory> findByFileName(String fileName);
 }

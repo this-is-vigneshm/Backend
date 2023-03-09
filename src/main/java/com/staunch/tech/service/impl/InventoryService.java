@@ -1,10 +1,15 @@
 package com.staunch.tech.service.impl;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
+import javax.mail.Multipart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.staunch.tech.dto.InventoryDto;
 import com.staunch.tech.entity.Inventory;
@@ -13,6 +18,7 @@ import com.staunch.tech.repository.EmployeeRepository;
 import com.staunch.tech.repository.InventoryRepository;
 import com.staunch.tech.service.IInventoryService;
 import com.staunch.tech.utils.ConversionUtils;
+import com.staunch.tech.utils.ImageUtils;
 import com.staunch.tech.utils.ValidationUtils;
 
 @Service
@@ -28,15 +34,22 @@ public class InventoryService implements IInventoryService {
 	private EmployeeRepository employeeRepository;
 
 	@Override
-	public Inventory createItem(InventoryDto inventoryDto) {
+	public Inventory createItem(InventoryDto inventoryDto , MultipartFile file) throws IOException  {
 		validationUtils.validate(inventoryDto);
 		var userOpt = employeeRepository.findById(inventoryDto.getUserId());
 		if (userOpt.isEmpty()) {
 			throw new AssetManagementException("User Id is Invalid!");
 		}
-		var item = ConversionUtils.convertDtoToNewEntity(inventoryDto, userOpt.get().getName());
+		var item = ConversionUtils.convertDtoToNewEntity(inventoryDto, userOpt.get().getName(),file);
 		return inventoryRepository.save(item);
 	}
+	
+	@Override
+	public byte[] downloadImage(int id){
+        Optional<Inventory> dbImageData = inventoryRepository.findById(id);
+        byte[] images=ImageUtils.decompressImage(dbImageData.get().getData());
+        return images;
+    }
 
 	@Override
 	public Inventory getItem(int itemId) {

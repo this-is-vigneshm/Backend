@@ -7,9 +7,13 @@ import com.staunch.tech.dto.TicketDto;
 import com.staunch.tech.dto.TicketRespDto;
 import com.staunch.tech.dto.UpdateTicketStatusDto;
 import com.staunch.tech.service.ITicketService;
+
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +31,7 @@ public class TicketController {
 
 	@PostMapping("/mail")
 	public ResponseEntity<ApiResponseDto> saveTicketAndMail(@RequestParam("ticketBody") String ticketDtoObj,
-			@Param("file") MultipartFile file) throws JsonProcessingException {
+			@Param("file") MultipartFile file) throws IOException {
 		var ticketDto = objectMapper.readValue(ticketDtoObj, TicketDto.class);
 		TicketRespDto data;
 		System.out.println("File " + file);
@@ -40,6 +44,12 @@ public class TicketController {
 		}
 		var response = new ApiResponseDto("1200", "Success", data);
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	@GetMapping("/download/{id}")
+	public ResponseEntity<byte[]> downloadImage(@PathVariable String id){
+		byte[] imageData=ticketService.downloadImage(id);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(imageData);
+
 	}
 
 	@GetMapping("/list")

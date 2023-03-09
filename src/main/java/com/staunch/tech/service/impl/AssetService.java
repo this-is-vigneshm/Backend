@@ -3,6 +3,7 @@ package com.staunch.tech.service.impl;
 import com.staunch.tech.dto.AssetByCsvDto;
 import com.staunch.tech.dto.AssetDto;
 import com.staunch.tech.entity.Asset;
+import com.staunch.tech.entity.WorkOrder;
 import com.staunch.tech.exception.AssetManagementException;
 import com.staunch.tech.repository.AreaRepository;
 import com.staunch.tech.repository.AssetRepository;
@@ -11,6 +12,7 @@ import com.staunch.tech.repository.LocationRepository;
 import com.staunch.tech.repository.RoomRepository;
 import com.staunch.tech.service.IAssertService;
 import com.staunch.tech.utils.ConversionUtils;
+import com.staunch.tech.utils.ImageUtils;
 import com.staunch.tech.utils.ValidationUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,7 +53,7 @@ public class AssetService implements IAssertService {
 	 * @return
 	 */
 	@Override
-	public Asset registerAsset(AssetDto assetDto) {
+	public Asset registerAsset(AssetDto assetDto, MultipartFile file) throws IOException {
 		try {
 			validationUtils.validate(assetDto);
 			var locationOpt = locationRepository.findByFacilityCode(assetDto.getFacilityCode());
@@ -61,12 +64,22 @@ public class AssetService implements IAssertService {
 			if (userOpt.isEmpty()) {
 				throw new AssetManagementException("User Id is Invalid!");
 			}
-			var asset = ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(),userOpt.get().getName());
-			return assetRepository.save(asset);
+//			var asset = ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), userOpt.get().getName());
+			var asset1 = ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), userOpt.get().getName(),
+					file);
+			return assetRepository.save(asset1);
 		} catch (DataIntegrityViolationException e) {
 			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
 		}
 	}
+
+
+	public byte[] downloadImage(int assetId) {
+		Optional<Asset> dbFile = assetRepository.findById(assetId);
+		byte[] file = ImageUtils.decompressImage(dbFile.get().getData());
+		return file;
+	}
+
 
 	/**
 	 * @param assetId
@@ -114,7 +127,7 @@ public class AssetService implements IAssertService {
 	 * @return
 	 */
 	@Override
-	public Asset updateAsset(int assetId, AssetDto assetDto) {
+	public Asset updateAsset(int assetId, AssetDto assetDto,MultipartFile file) throws IOException {
 		try {
 			if (assetId != assetDto.getId()) {
 				throw new AssetManagementException("Asset id in body and path are not same");
@@ -133,7 +146,7 @@ public class AssetService implements IAssertService {
 				throw new AssetManagementException("User Id is Invalid!");
 			}
 			var asset = ConversionUtils.convertDtoToUpdateEntity(assetDto, locationOpt.get(),userOpt.get().getName(),
-					assetOpt.get());
+					assetOpt.get(),file);
 			return assetRepository.save(asset);
 		} catch (DataIntegrityViolationException e) {
 			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
@@ -159,41 +172,41 @@ public class AssetService implements IAssertService {
 	 * @param file
 	 * @return
 	 */
-	@Override
-	public AssetByCsvDto addAssetsByCsv(MultipartFile file, int userId) {
-		if (file.isEmpty()) {
-			throw new AssetManagementException("File is Empty");
-		}
-		var userOpt = employeeRepository.findById(userId);
-		if (userOpt.isEmpty()) {
-			throw new AssetManagementException("User Id is Invalid!");
-		}
-		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"))) {
-			List<Asset> assets = new ArrayList<>();
-			List<AssetDto> failedAssets = new ArrayList<>();
-			Iterable<CSVRecord> csvRecords1 = CSVFormat.RFC4180
-					.withHeader("name", "description", "price", "facilityCode").parse(fileReader).getRecords();
-			for (CSVRecord csvRecord : csvRecords1) {
-				AssetDto assetDto = new AssetDto();
-				assetDto.setName(csvRecord.get("name").replaceAll("[^a-zA-Z0-9]", ""));
-				assetDto.setDescription(csvRecord.get("description"));
-				assetDto.setPrice(Float.parseFloat(csvRecord.get("price").replaceAll("[^a-zA-Z0-9]", "")));
-				assetDto.setFacilityCode(csvRecord.get("facilityCode").replaceAll("[^a-zA-Z0-9]", ""));
-				var locationOpt = locationRepository.findByFacilityCode(assetDto.getFacilityCode());
-				if (locationOpt.isEmpty()) {
-					failedAssets.add(assetDto);
-					continue;
-				}
-				assets.add(ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), "Dhinesh"));
-			}
-			System.out.println(assets);
-			var savedRecords = assetRepository.saveAll(assets);
-			return new AssetByCsvDto(savedRecords, "Facility Code is Invalid", failedAssets);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new AssetManagementException("Error while handling the file.");
-		} catch (DataIntegrityViolationException e) {
-			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
-		}
-	}
+//	@Override
+//	public AssetByCsvDto addAssetsByCsv(MultipartFile file, int userId) {
+//		if (file.isEmpty()) {
+//			throw new AssetManagementException("File is Empty");
+//		}
+//		var userOpt = employeeRepository.findById(userId);
+//		if (userOpt.isEmpty()) {
+//			throw new AssetManagementException("User Id is Invalid!");
+//		}
+//		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"))) {
+//			List<Asset> assets = new ArrayList<>();
+//			List<AssetDto> failedAssets = new ArrayList<>();
+//			Iterable<CSVRecord> csvRecords1 = CSVFormat.RFC4180
+//					.withHeader("name", "description", "price", "facilityCode").parse(fileReader).getRecords();
+//			for (CSVRecord csvRecord : csvRecords1) {
+//				AssetDto assetDto = new AssetDto();
+//				assetDto.setName(csvRecord.get("name").replaceAll("[^a-zA-Z0-9]", ""));
+//				assetDto.setDescription(csvRecord.get("description"));
+//				assetDto.setPrice(Float.parseFloat(csvRecord.get("price").replaceAll("[^a-zA-Z0-9]", "")));
+//				assetDto.setFacilityCode(csvRecord.get("facilityCode").replaceAll("[^a-zA-Z0-9]", ""));
+//				var locationOpt = locationRepository.findByFacilityCode(assetDto.getFacilityCode());
+//				if (locationOpt.isEmpty()) {
+//					failedAssets.add(assetDto);
+//					continue;
+//				}
+//				assets.add(ConversionUtils.convertDtoToNewEntity(assetDto, locationOpt.get(), "Dhinesh"));
+//			}
+//			System.out.println(assets);
+//			var savedRecords = assetRepository.saveAll(assets);
+//			return new AssetByCsvDto(savedRecords, "Facility Code is Invalid", failedAssets);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			throw new AssetManagementException("Error while handling the file.");
+//		} catch (DataIntegrityViolationException e) {
+//			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
+//		}
+//	}
 }
