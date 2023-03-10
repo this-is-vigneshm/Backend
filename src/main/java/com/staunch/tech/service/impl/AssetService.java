@@ -167,6 +167,23 @@ public class AssetService implements IAssertService {
 		return "Asset with id : " + assetId + " deleted successfully";
 	}
 
+
+	@Override
+	public String createMultiAsset(List<AssetDto> assetDto) {
+		for(var i:assetDto)
+		{
+			var userOpt = employeeRepository.findById(i.getUserId()); 
+			var loc = locationRepository.findByFacilityCode(i.getFacilityCode());
+			long createdTime = System.currentTimeMillis();
+			assetRepository.save(new Asset(i.getId(), i.getName(), i.getCode(), i.getSerialNo(),
+					i.getDescription(), loc.get(), i.getAreaId(), i.getRoomId(), i.getCategory(),
+					i.getDepartment(), i.getSubAsset(), i.getSystem(), i.getSupplier(),
+					i.getStatus(), i.getPriority(), i.getMake(), i.getModel(),
+					i.getPrice(), "".getBytes(), "", userOpt.get().getName(), createdTime,  userOpt.get().getName(), createdTime, false));
+		}
+		return "SUCCESS";
+	}
+
 	/**
 	 *
 	 * @param file
@@ -209,4 +226,7 @@ public class AssetService implements IAssertService {
 //			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
 //		}
 //	}
+	
+	
+	
 }

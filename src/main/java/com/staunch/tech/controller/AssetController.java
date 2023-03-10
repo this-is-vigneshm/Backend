@@ -7,6 +7,7 @@ import com.staunch.tech.entity.Asset;
 import com.staunch.tech.service.IAssertService;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -84,6 +85,13 @@ public class AssetController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+	@PostMapping("/saveAll")
+	public ResponseEntity<ApiResponseDto> addMutiAsset(@RequestBody List<AssetDto> assetDto ){
+		var response = new ApiResponseDto("1200", "Success", assetService.createMultiAsset(assetDto));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	
 //	@PostMapping("/csv/{userId}")
 //	public ResponseEntity<ApiResponseDto> addAssetByCsv(@RequestParam("file") MultipartFile file,
 //			@PathVariable("userId") int userId) {

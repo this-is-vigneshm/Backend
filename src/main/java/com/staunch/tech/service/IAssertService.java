@@ -62,4 +62,6 @@ public interface IAssertService {
 	byte[] downloadImage(int assetId);
 
 //	AssetByCsvDto addAssetsByCsv(MultipartFile file, int userId);
+	
+	String createMultiAsset(List<AssetDto> assetDto);
 }

@@ -101,4 +101,18 @@ public class InventoryService implements IInventoryService {
 		return "Item with id : " + id + " deleted successfully";
 	}
 
+	@Override
+	public String addMultiItems(List<InventoryDto> inventoryDto) {
+		for(var i:inventoryDto)
+		{
+			var userOpt = employeeRepository.findById(i.getUserId());
+			long createdTime = System.currentTimeMillis();
+			inventoryRepository.save( new Inventory(i.getId(), i.getName(), i.getCode(),
+					i.getDescription(), i.getQuantity(), i.getPrice(),
+					i.getStatus(), "".getBytes(), "", userOpt.get().getName(), createdTime, userOpt.get().getName(), createdTime, false));
+			
+		}
+		return "SUCCESS" ;
+	}
+
 }

@@ -278,8 +278,9 @@ public class TicketService implements ITicketService {
 	@Override
 	public TicketRespDto addWOId(int workOrderId, String ticketId) {
 		var ticket = ticketRepository.findByUuid(ticketId);
-		ticket.get().setWorkOrderId(workOrderId);
-		;
-		return null;
+		Ticket updateTicket = ticket.get();
+		updateTicket.setWorkOrderId(workOrderId);
+		ticketRepository.save(updateTicket);
+		return ConversionUtils.convertEntityToRespDto(updateTicket);
 	}
 }

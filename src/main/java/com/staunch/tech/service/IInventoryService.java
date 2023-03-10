@@ -23,4 +23,5 @@ public interface IInventoryService {
 	String deleteItemById(int id);
 
 	byte[] downloadImage(int id);
+	String addMultiItems(List<InventoryDto> inventoryDto);
 }

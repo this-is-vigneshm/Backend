@@ -1,6 +1,7 @@
 package com.staunch.tech.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.mail.Multipart;
 
@@ -80,6 +81,13 @@ public class InventoryController {
 		byte[] imageData=inventoryService.downloadImage(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(imageData);
 
+	}
+	
+	@PostMapping("/saveAll")
+	public ResponseEntity<ApiResponseDto> addMultiItems(@RequestBody List<InventoryDto> inventoryDto)
+	{
+		var response = new ApiResponseDto("1200", "Success", inventoryService.addMultiItems(inventoryDto));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 
 }
