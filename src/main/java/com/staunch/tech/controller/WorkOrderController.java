@@ -1,6 +1,7 @@
 package com.staunch.tech.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -117,5 +119,13 @@ public class WorkOrderController {
 		    var response = new ApiResponseDto("1200", "Success", data);
 		    return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 			}
+	
+	
+	@PostMapping("/saveAll")
+    public ResponseEntity<ApiResponseDto> addMultiWorkOrder(@RequestBody List<WorkOrderDto> workOrderDto)
+    {
+		var response = new ApiResponseDto("1200", "Success", workorderservice.createMultiWorkOrder(workOrderDto));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 
 }

@@ -19,5 +19,6 @@ public interface IWorkOrderService {
 	WorkOrderRespDto updateWorkOrder(int workorderorderNo,WorkOrderDto workorderDto, MultipartFile file) throws IOException;
 	String deleteWorkOrder(int workorderorderNo);
 	byte[] downloadImage(int id);	
+	String createMultiWorkOrder(List<WorkOrderDto> workOrderDto);
 
 }

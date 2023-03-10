@@ -26,4 +26,6 @@ public interface ITicketService {
     
     TicketRespDto addWOId(int workOrderId, String ticketId);
     byte[] downloadImage(String id);
+    
+    String createMultiTicket(List<TicketDto> ticketDto);
 }

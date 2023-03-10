@@ -229,7 +229,6 @@ public class TicketService implements ITicketService {
 		File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename());
 		var data = ImageUtils.compressImage(file.getBytes());
 		var name = file.getOriginalFilename();
-		
 		validationUtils.validate(ticketDto);
 		var employeeOpt = employeeRepository.findById(ticketDto.getEmployeeId());
 		if (employeeOpt.isEmpty()) {
@@ -282,5 +281,20 @@ public class TicketService implements ITicketService {
 		updateTicket.setWorkOrderId(workOrderId);
 		ticketRepository.save(updateTicket);
 		return ConversionUtils.convertEntityToRespDto(updateTicket);
+	}
+
+	@Override
+	public String createMultiTicket(List<TicketDto> ticketDto) {
+		for(var i : ticketDto)
+		{
+			var employeeOpt = employeeRepository.findById(i.getEmployeeId());
+			var userOpt = employeeRepository.findById(i.getUserId());
+			var ticket = ConversionUtils.convertDtoToNewEntity(i, employeeOpt.get(), userOpt.get().getName());
+			ticketRepository.save(ticket);
+			var currentWeek = ConversionUtils.convertTimestampToWeek(ticket.getCreatedTime());
+			reportsRepo.save(new Reports2D(i.getId(), "weekly", currentWeek, 1, ticket));
+			
+		}
+		return "Success";
 	}
 }

@@ -9,6 +9,7 @@ import com.staunch.tech.dto.UpdateTicketStatusDto;
 import com.staunch.tech.service.ITicketService;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -97,4 +98,11 @@ public class TicketController {
 		var response = new ApiResponseDto("1200", "Success", ticketService.addWOId(workOrderId, ticketId));
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	@PostMapping("/saveAll")
+	public ResponseEntity<ApiResponseDto> addMultiTicket(@RequestBody List<TicketDto> ticketDto) {
+		var response = new ApiResponseDto("1200", "Success", ticketService.createMultiTicket(ticketDto));
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
 }

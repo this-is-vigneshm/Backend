@@ -212,5 +212,22 @@ public class WorkOrderService implements IWorkOrderService {
 	        var workorder = workorderOpt.get();
 	        var updatedWorkOrder = ConversionUtils.convertDtoToUpdateEntity(workorderDto,employee,employee.getName(),file, workorder);
            return ConversionUtils.convertEntityToRespDto(workorderRepository.save(updatedWorkOrder));	}
+
+	@Override
+	public String createMultiWorkOrder(List<WorkOrderDto> workOrderDto) {
+		for(var i : workOrderDto)
+		{
+			var employeeOpt = employeeRepository.findById(i.getEmployeeId());
+			var userOpt = employeeRepository.findById(i.getEmployeeId());
+			long createdTime = System.currentTimeMillis();
+		    workorderRepository.save( new WorkOrder(i.getOrderNo(), i.getWorkOrderCode(), i.getStatus(),
+					i.getName(), i.getEmailId(), employeeOpt.get(), i.getPhoneNumber(),
+					i.getDescription(), i.getWorkSubject(), i.getTaskDetails(),
+					i.getDate(), i.getWorkOrderCost(), "".getBytes(), "", userOpt.get().getName(), createdTime,  userOpt.get().getName(),
+					createdTime, 0, i.getExpectedCompletionTime()));
+			
+		}
+		return "Success";
+	}
 	
 }

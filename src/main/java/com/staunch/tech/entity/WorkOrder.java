@@ -33,7 +33,7 @@ public class WorkOrder {
 	private int orderNo;
 	
 
-	@Column(name = "workOrder_code")
+	@Column(name = "workOrder_code", unique = true)
 	private String code;
 	
 	@Column(name = "status")
