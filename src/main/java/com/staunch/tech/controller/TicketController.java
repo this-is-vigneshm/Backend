@@ -45,8 +45,11 @@ public class TicketController {
 		var response = new ApiResponseDto("1200", "Success", data);
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	
 	@GetMapping("/download/{id}")
 	public ResponseEntity<byte[]> downloadImage(@PathVariable String id){
+		System.out.print(id);
 		byte[] imageData=ticketService.downloadImage(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(imageData);
 

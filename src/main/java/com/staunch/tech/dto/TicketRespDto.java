@@ -23,8 +23,7 @@ public class TicketRespDto {
     private String issueTYpe;
     private String assetId;
 	private int workOrderId;
-	private byte[] data;
-	private String fileName;
+
 
     private String createdBy;
     private long createdTime;

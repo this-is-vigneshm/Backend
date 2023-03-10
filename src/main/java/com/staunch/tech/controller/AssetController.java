@@ -75,7 +75,7 @@ public class AssetController {
 	@GetMapping("/{assetId}")
 	public ResponseEntity<ApiResponseDto> getAssetById(@PathVariable("assetId") int assetId) {
 		var response = new ApiResponseDto("1200", "Success", assetService.getAsset(assetId));
-		return new ResponseEntity<>(response, HttpStatus.FOUND);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/facilities/{location}")

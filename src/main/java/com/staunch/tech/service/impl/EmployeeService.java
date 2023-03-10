@@ -160,7 +160,10 @@ public class EmployeeService implements IEmployeeService {
 	public String registerAllEmployee(List<EmployeeDto> multireg){
 		
 		for(var i : multireg) {
-			employeeRepository.save( ConversionUtils.convertDtoToNewEntity(i, "Srinath"));
+			var employee = ConversionUtils.convertDtoToNewEntity(i, "Dhinesh");
+			var encodedPassword = passwordEncoder.encode(employee.getPassword());
+			employee.setPassword(encodedPassword);
+			employeeRepository.save(employee);
 		}
 		return "SUCCESS";
 	}
@@ -171,7 +174,7 @@ public class EmployeeService implements IEmployeeService {
 //	/**
 //	 * @param username
 //	 * @return
-//	 * @throws UsernameNotFoundException
+//	 * @throws UsernameNotFoundExceptio
 //	 */
 //	@Override
 //	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -94,15 +94,12 @@ public class ConversionUtils {
 		long createdTime = System.currentTimeMillis();
 		return new Ticket(UUID.randomUUID().toString(), ticketDto.getTitle(), ticketDto.getDescription(),
 				ticketDto.getCategory(), "Open", employee, ticketDto.getIssueType(), ticketDto.getAssetId(),
-				ticketDto.getWorkOrderId(), ticketDto.getData(), ticketDto.getFileName(), createdBy, createdTime,
+				ticketDto.getWorkOrderId(), "".getBytes(), "", createdBy, createdTime,
 				createdBy, createdTime, 0, 0, ticketDto.getExpectedCompletionTime());
 	}
 
-	public static Ticket convertDtoToNewEntity1(TicketDto ticketDto, Employee employee, String createdBy,
-			MultipartFile file) throws IOException {
+	public static Ticket convertDtoToNewEntity1(TicketDto ticketDto, Employee employee, String createdBy,byte[] data ,String name) throws IOException {
 		long createdTime = System.currentTimeMillis();
-		var data = ImageUtils.compressImage(file.getBytes());
-		var name = file.getOriginalFilename();
 		return new Ticket(UUID.randomUUID().toString(), ticketDto.getTitle(), ticketDto.getDescription(),
 				ticketDto.getCategory(), "Open", employee, ticketDto.getIssueType(), ticketDto.getAssetId(),
 				ticketDto.getWorkOrderId(), data, name, createdBy, createdTime, createdBy, createdTime, 0, 0,
@@ -120,11 +117,10 @@ public class ConversionUtils {
 	}
 
 	public static TicketRespDto convertEntityToRespDto(Ticket ticket) {
-		byte[] images = ImageUtils.decompressImage(ticket.getData());
 		return new TicketRespDto(ticket.getUuid(), ticket.getTitle(), ticket.getDescription(), ticket.getCategory(),
 				ticket.getStatus(), ticket.getEmployeeId().getId(), ticket.getEmployeeId().getName(),
 				ticket.getEmployeeId().getEmail(), ticket.getEmployeeId().getDepartment(), ticket.getIssueType(),
-				ticket.getAssetId(), ticket.getWorkOrderId(), images, ticket.getFileName(), ticket.getCreatedBy(),
+				ticket.getAssetId(), ticket.getWorkOrderId(), ticket.getCreatedBy(),
 				ticket.getCreatedTime(), ticket.getUpdatedBy(), ticket.getUpdatedTime(), ticket.getTimeTaken(), false,
 				ticket.getExpectedCompletionTime());
 	}

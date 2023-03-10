@@ -7,6 +7,7 @@ import javax.mail.Multipart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,7 +72,14 @@ public class InventoryController {
 	@GetMapping("/{itemId}")
 	public ResponseEntity<ApiResponseDto> getItemById(@PathVariable("itemId") int itemId) {
 		var response = new ApiResponseDto("1200", "Success", inventoryService.getItem(itemId));
-		return new ResponseEntity<>(response, HttpStatus.FOUND);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/download/{id}")
+	public ResponseEntity<byte[]> downloadImage(@PathVariable int id){
+		byte[] imageData=inventoryService.downloadImage(id);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(imageData);
+
 	}
 
 }
