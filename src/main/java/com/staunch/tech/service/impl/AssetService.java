@@ -36,11 +36,6 @@ public class AssetService implements IAssertService {
 	@Autowired
 	private LocationRepository locationRepository;
 	
-	@Autowired
-	private AreaRepository areaRepository;
-	
-	@Autowired
-	private RoomRepository roomRepository;
 
 	@Autowired
 	private ValidationUtils validationUtils;

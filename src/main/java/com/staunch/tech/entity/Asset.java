@@ -25,8 +25,7 @@ public class Asset {
     private String name;
     @Column(name ="code")
     private String code;
-    @Column(name = "serialNo")
-    private int serialNo;
+
     @Column(name ="description")
     private String description;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -41,6 +40,9 @@ public class Asset {
 
     @Column(name ="room_id")
     private int room;
+    
+    @Column(name = "serialNo")
+    private int serialNo;
     
     @Column(name = "category")
     private String category;

@@ -46,7 +46,7 @@ public class ConversionUtils {
 				assetDto.getDepartment(), assetDto.getSubAsset(), assetDto.getSystem(), assetDto.getSupplier(),
 				assetDto.getStatus(), assetDto.getPriority(), assetDto.getMake(), assetDto.getModel(),
 				assetDto.getPrice(), data, name, createdBy, createdTime, updatedBy, updatedTime, false);
-
+	}
 	public static Employee convertDtoToNewEntity(EmployeeDto employeeDto, String createdBy) {
 		long createdTime = System.currentTimeMillis();
 		return new Employee(employeeDto.getId(), employeeDto.getName(), employeeDto.getEmail(),
