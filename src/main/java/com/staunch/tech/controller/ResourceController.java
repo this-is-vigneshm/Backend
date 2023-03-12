@@ -33,7 +33,7 @@ public class ResourceController {
 	@PutMapping("/resourceId/{id}")
 	public ResponseEntity<ApiResponseDto> updateResource(@PathVariable int id, @RequestBody ResourceDto resourceDto) {
 		var response = new ApiResponseDto("1200", "Success", iResourceService.updateResource(id, resourceDto));
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")

@@ -52,6 +52,7 @@ public class ResourceService implements IResourceService {
 		Resource resource = repo.get();
 		resource.setResourceName(resourceDto.getResourceName());
 		resource.setResourceType(resourceDto.getResourceType());
+		resource.setStartDate(resourceDto.getStartDate());
 		resource.setEndDate(resourceDto.getEndDate());
 		return repository.save(resource);
 	}
