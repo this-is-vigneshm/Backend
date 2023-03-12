@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.staunch.tech.dto.BubbleChartDto;
 import com.staunch.tech.dto.Reports3Dto;
 import com.staunch.tech.dto.ReportsDto;
+import com.staunch.tech.entity.Reports2D;
 import com.staunch.tech.entity.Reports3D;
 import com.staunch.tech.repository.Reports2DRepository;
 import com.staunch.tech.repository.Reports3DRepository;
@@ -165,6 +166,22 @@ public class ReportsServices implements IReports{
 				reports.add(new BubbleChartDto(o, type, value, no));}
 		}
 		return reports;
+	}
+
+	@Override
+	public String generate2D(List<Reports2D> reports2d) {
+		for(var i:reports2d) {
+			reportsRepo.save(i);
+		}
+		return "Success";
+	}
+
+	@Override
+	public String generate3D(List<Reports3D> reports3d) {
+		for(var i:reports3d) {
+			reports3Repo.save(i);
+		}
+		return "Success";
 	}
 }
 

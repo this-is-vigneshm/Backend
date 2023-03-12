@@ -5,11 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.staunch.tech.dto.ApiResponseDto;
+import com.staunch.tech.entity.Reports2D;
+import com.staunch.tech.entity.Reports3D;
 import com.staunch.tech.service.IReports;
 import com.staunch.tech.service.ITicketService;
 import java.util.List;
@@ -57,5 +60,17 @@ public class ReportsController {
 	public ResponseEntity<ApiResponseDto> getvalues(@RequestParam List<String> listId){
 		var response = new ApiResponseDto("1200", "Success", ticketServices.getAllTicketsById(listId));
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@PostMapping("/2d/saveAll")
+	public ResponseEntity<ApiResponseDto> generateReports(@RequestBody List<Reports2D> reports2d){
+		var response = new ApiResponseDto("1200", "Success", reportServices.generate2D(reports2d));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/3d/saveAll")
+	public ResponseEntity<ApiResponseDto> generate3DReports(@RequestBody List<Reports3D> reports3d){
+		var response = new ApiResponseDto("1200", "Success", reportServices.generate3D(reports3d));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 }

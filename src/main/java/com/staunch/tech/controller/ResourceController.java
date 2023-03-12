@@ -1,5 +1,7 @@
 package com.staunch.tech.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,5 +62,10 @@ public class ResourceController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+	@PostMapping("/saveAll")
+	public ResponseEntity<ApiResponseDto> addMultiResource(@RequestBody List<ResourceDto> resourceDto) {
+		var response = new ApiResponseDto("1200", "Success", iResourceService.registerMultiResource(resourceDto));
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 
 }

@@ -100,4 +100,14 @@ public class ResourceService implements IResourceService {
 
 		return resourceList;
 	}
+
+	@Override
+	public String registerMultiResource(List<ResourceDto> resourceDto) {
+		for(var i : resourceDto)
+		{
+			var resource = ConversionUtils.convertDtoToNewEntity(i, i.getUserId());
+			repository.save(resource);
+		}
+		return "Success";
+	}
 }

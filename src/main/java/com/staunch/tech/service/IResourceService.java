@@ -21,5 +21,7 @@ public interface IResourceService {
 	String deleteById(int id);
 	
 	List<Resource> getAllByworkorderCode(String workOrderCode);
+	
+	String registerMultiResource(List<ResourceDto> resourceDto);
 
 }
