@@ -15,6 +15,8 @@ import com.staunch.tech.dto.Reports3Dto;
 import com.staunch.tech.dto.ReportsDto;
 import com.staunch.tech.entity.Reports2D;
 import com.staunch.tech.entity.Reports3D;
+import com.staunch.tech.entity.Ticket;
+import com.staunch.tech.repository.EmployeeRepository;
 import com.staunch.tech.repository.Reports2DRepository;
 import com.staunch.tech.repository.Reports3DRepository;
 import com.staunch.tech.repository.TicketRepository;
@@ -30,6 +32,12 @@ public class ReportsServices implements IReports{
 	
 	@Autowired
 	private Reports3DRepository reports3Repo;
+	
+	@Autowired
+	private TicketRepository ticketRepo;
+	
+	@Autowired
+	private EmployeeRepository employeeRepo;
 	
 	@Override
 	public List<ReportsDto> calculateAmountSpent() {
@@ -51,7 +59,7 @@ public class ReportsServices implements IReports{
 				if(i.contains(j.getLabels()))
 				{
 					temp=temp+j.getValues();
-					listUuid.add(aa++,j.getTicket_id().getUuid());
+					listUuid.add(aa++,j.getTicket_id());
 				} 
 			}
 			reports.add(pos++, new ReportsDto(i, temp, listUuid));
@@ -80,7 +88,7 @@ public class ReportsServices implements IReports{
 				if(i.contains(j.getLabels()))
 				{
 					temp=temp+j.getValues();
-					listUuid.add(aa++,j.getTicket_id().getUuid());
+					listUuid.add(aa++,j.getTicket_id());
 				} 
 			}
 			reports.add(pos++, new ReportsDto(i, temp, listUuid));
@@ -116,7 +124,7 @@ public class ReportsServices implements IReports{
 					if(i.contains(k.getLabels()) && j.contains(k.getLabel()))
 					{
 						temp=temp+k.getValues();
-						listUuid.add(aa++,k.getTicket_id().getUuid());
+						listUuid.add(aa++,k.getTicket_id());
 					}
 				}
 				month.add(bb,j);

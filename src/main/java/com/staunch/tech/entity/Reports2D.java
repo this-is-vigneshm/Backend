@@ -37,8 +37,6 @@ public class Reports2D {
 	@Column(name = "chart_values")
 	private long values;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "uuid_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-	private Ticket ticket_id;
+	@Column(name = "ticket_id")
+	private String ticket_id;
 }

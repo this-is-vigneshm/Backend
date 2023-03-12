@@ -74,7 +74,7 @@ public class TicketService implements ITicketService {
 		emailService.sendSimpleMail(emailDetails);
 		var newTicket = ConversionUtils.convertEntityToRespDto(ticketRepository.save(ticket));
 		var currentWeek = ConversionUtils.convertTimestampToWeek(newTicket.getCreatedTime());
-		reportsRepo.save(new Reports2D(ticketDto.getId(), "weekly", currentWeek, 1, ticket));
+		reportsRepo.save(new Reports2D(ticketDto.getId(), "weekly", currentWeek, 1, ticket.getUuid()));
 		return newTicket;
 	}
 
@@ -170,11 +170,11 @@ public class TicketService implements ITicketService {
 		var mReport = ConversionUtils.convertTimestampToMonth(updatedTicket.getCreatedTime());
 		if (ticket.getTotalCost() > 0) {
 			reportsRepo.save(new Reports2D(updateTicketStatusDto.getId(), "colour", ticket.getCategory(),
-					ticket.getTotalCost(), ticket));
+					ticket.getTotalCost(), ticket.getUuid()));
 			reports3Repo.save(new Reports3D(updateTicketStatusDto.getId(), "radar", mReport, ticket.getIssueType(),
-					ticket.getTotalCost(), ticket));
+					ticket.getTotalCost(), ticket.getUuid()));
 			reports3Repo.save(new Reports3D(updateTicketStatusDto.getId(), "bubble", uTicket, ticket.getIssueType(),
-					ticket.getTotalCost(), ticket));
+					ticket.getTotalCost(), ticket.getUuid()));
 		}
 		return updatedTicket;
 	}
@@ -211,11 +211,11 @@ public class TicketService implements ITicketService {
 		var mReport = ConversionUtils.convertTimestampToMonth(updatedTicket.getCreatedTime());
 		if (ticket.getTotalCost() > 0) {
 			reportsRepo.save(
-					new Reports2D(ticketDto.getId(), "colour", ticket.getCategory(), ticket.getTotalCost(), ticket));
+					new Reports2D(ticketDto.getId(), "colour", ticket.getCategory(), ticket.getTotalCost(), ticket.getUuid()));
 			reports3Repo.save(new Reports3D(ticketDto.getId(), "radar", mReport, updateTicket.getIssueTYpe(),
-					ticket.getTotalCost(), ticket));
+					ticket.getTotalCost(), ticket.getUuid()));
 			reports3Repo.save(new Reports3D(ticketDto.getId(), "bubble", uTicket, updateTicket.getIssueTYpe(),
-					ticket.getTotalCost(), ticket));
+					ticket.getTotalCost(), ticket.getUuid()));
 		}
 		return updateTicket;
 	}
@@ -251,7 +251,7 @@ public class TicketService implements ITicketService {
 		emailService.sendMailWithAttachment(emailDetails);
 		var newTicket = ConversionUtils.convertEntityToRespDto(ticketRepository.save(ticket));
 		var currentWeek = ConversionUtils.convertTimestampToWeek(newTicket.getCreatedTime());
-		reportsRepo.save(new Reports2D(ticketDto.getId(), "weekly", currentWeek, 1, ticket));
+		reportsRepo.save(new Reports2D(ticketDto.getId(), "weekly", currentWeek, 1, ticket.getUuid()));
 		return newTicket;
 	}
 
@@ -292,7 +292,7 @@ public class TicketService implements ITicketService {
 			var ticket = ConversionUtils.convertDtoToNewEntity(i, employeeOpt.get(), userOpt.get().getName());
 			ticketRepository.save(ticket);
 			var currentWeek = ConversionUtils.convertTimestampToWeek(ticket.getCreatedTime());
-			reportsRepo.save(new Reports2D(i.getId(), "weekly", currentWeek, 1, ticket));
+			reportsRepo.save(new Reports2D(i.getId(), "weekly", currentWeek, 1, ticket.getUuid()));
 			
 		}
 		return "Success";
