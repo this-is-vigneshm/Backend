@@ -3,6 +3,7 @@ package com.staunch.tech.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -223,8 +224,8 @@ public class WorkOrderService implements IWorkOrderService {
 		    workorderRepository.save( new WorkOrder(i.getOrderNo(), i.getWorkOrderCode(), i.getStatus(),
 					i.getName(), i.getEmailId(), employeeOpt.get(), i.getPhoneNumber(),
 					i.getDescription(), i.getWorkSubject(), i.getTaskDetails(),
-					i.getDate(), i.getWorkOrderCost(), "".getBytes(), "", userOpt.get().getName(), createdTime,  userOpt.get().getName(),
-					createdTime, 0, i.getExpectedCompletionTime()));
+					new Date(createdTime), i.getWorkOrderCost(), "".getBytes(), "", userOpt.get().getName(), createdTime,  userOpt.get().getName(),
+					createdTime, 0, (createdTime + 86400000)));
 			
 		}
 		return "Success";
