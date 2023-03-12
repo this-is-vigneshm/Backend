@@ -34,7 +34,7 @@ public class BuildingService implements IBuildingService {
 	public Building createBuilding(BuildingDto buildingDto) {
 		
 		var location = locationRepository.findById(buildingDto.getLocationId());
-		return buildingRepository.save(new Building(buildingDto.getId(),buildingDto.getName(), location.get()));
+		return buildingRepository.save(new Building(buildingDto.getId(),buildingDto.getName(), location.get(), false));
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class BuildingService implements IBuildingService {
 		for(var i:buildingDto)
 		{
 			var location = locationRepository.findById(i.getLocationId());
-			buildingRepository.save(new Building(i.getId(),i.getName(), location.get()));
+			buildingRepository.save(new Building(i.getId(),i.getName(), location.get(), false));
 		}
 		return "SUCCESS";
 	}

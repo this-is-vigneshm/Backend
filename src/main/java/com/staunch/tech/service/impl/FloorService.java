@@ -26,7 +26,7 @@ public class FloorService implements IFloorService {
 	@Override
 	public Floor createFloor(FloorDto floorDto) {
 		var building = buildingRepository.findById(floorDto.getBuildingId());
-		return floorRepository.save(new Floor(floorDto.getId(),floorDto.getName(), building.get()));
+		return floorRepository.save(new Floor(floorDto.getId(),floorDto.getName(), building.get(), false));
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class FloorService implements IFloorService {
 		for(var i:floorDto)
 		{
 			var building = buildingRepository.findById(i.getBuildingId());
-			floorRepository.save(new Floor(i.getId(),i.getName(), building.get()));
+			floorRepository.save(new Floor(i.getId(),i.getName(), building.get(), false));
 		}
 		return "SUCCESS";
 	}

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -36,4 +37,6 @@ public class Floor {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Building building;
 
+    @Transient
+    private boolean expand;
 }
