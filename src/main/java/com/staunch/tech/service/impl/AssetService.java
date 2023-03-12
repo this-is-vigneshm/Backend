@@ -175,8 +175,8 @@ public class AssetService implements IAssertService {
 			var userOpt = employeeRepository.findById(i.getUserId()); 
 			var loc = locationRepository.findByFacilityCode(i.getFacilityCode());
 			long createdTime = System.currentTimeMillis();
-			assetRepository.save(new Asset(i.getId(), i.getName(), i.getCode(), i.getSerialNo(),
-					i.getDescription(), loc.get(), i.getAreaId(), i.getRoomId(), i.getCategory(),
+			assetRepository.save(new Asset(i.getId(), i.getName(), i.getCode(),
+					i.getDescription(), loc.get(), i.getAreaId(), i.getRoomId(), i.getSerialNo(), i.getCategory(),
 					i.getDepartment(), i.getSubAsset(), i.getSystem(), i.getSupplier(),
 					i.getStatus(), i.getPriority(), i.getMake(), i.getModel(),
 					i.getPrice(), "".getBytes(), "", userOpt.get().getName(), createdTime,  userOpt.get().getName(), createdTime, false));

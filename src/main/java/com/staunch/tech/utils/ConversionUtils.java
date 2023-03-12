@@ -27,8 +27,8 @@ public class ConversionUtils {
 		long createdTime = System.currentTimeMillis();
 		byte[] data = ImageUtils.compressImage(file.getBytes());
 		String fileName = file.getOriginalFilename();
-		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
-				assetDto.getDescription(), location, assetDto.getAreaId(), assetDto.getRoomId(), assetDto.getCategory(),
+		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(),
+				assetDto.getDescription(), location, assetDto.getAreaId(), assetDto.getRoomId(),  assetDto.getSerialNo(),assetDto.getCategory(),
 				assetDto.getDepartment(), assetDto.getSubAsset(), assetDto.getSystem(), assetDto.getSupplier(),
 				assetDto.getStatus(), assetDto.getPriority(), assetDto.getMake(), assetDto.getModel(),
 				assetDto.getPrice(), data, fileName, name, createdTime, name, createdTime, false);
@@ -41,12 +41,11 @@ public class ConversionUtils {
 		String createdBy = existingAsset.getCreatedBy();
 		var data = ImageUtils.compressImage(file.getBytes());
 		var name = file.getOriginalFilename();
-		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(), assetDto.getSerialNo(),
-				assetDto.getDescription(), location, assetDto.getAreaId(), assetDto.getRoomId(), assetDto.getCategory(),
+		return new Asset(assetDto.getId(), assetDto.getName(), assetDto.getCode(),
+				assetDto.getDescription(), location, assetDto.getAreaId(), assetDto.getRoomId(), assetDto.getSerialNo(), assetDto.getCategory(),
 				assetDto.getDepartment(), assetDto.getSubAsset(), assetDto.getSystem(), assetDto.getSupplier(),
 				assetDto.getStatus(), assetDto.getPriority(), assetDto.getMake(), assetDto.getModel(),
 				assetDto.getPrice(), data, name, createdBy, createdTime, updatedBy, updatedTime, false);
-	}
 
 	public static Employee convertDtoToNewEntity(EmployeeDto employeeDto, String createdBy) {
 		long createdTime = System.currentTimeMillis();
