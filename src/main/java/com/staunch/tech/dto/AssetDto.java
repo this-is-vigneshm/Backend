@@ -20,8 +20,7 @@ public class AssetDto {
 	@NotBlank(message = "Code is Empty")
     private String code;
 	
-	@NotNull(message = "Serial no is Empty")
-    private int serialNo;
+   
 	
     @Column(name ="description")
     @NotBlank(message = "Description is Empty")
@@ -34,34 +33,36 @@ public class AssetDto {
     
     private int roomId;
     
-	@NotBlank(message = "Category is Empty")
+    private int serialNo;
+    
+
 	private String category;
 	
-	@NotBlank(message = "Department is Empty")
+
 	private String department;
 	
-	@NotBlank(message = "SubAsset is Empty")
+
 	private String subAsset;
 	
-	@NotBlank(message = "Sysytem is Empty")
+
 	private String system;
 	
-	@NotBlank(message = "Supplier is Empty")
+
 	private String supplier; 
 	
-	@NotBlank(message = "Status is Empty")
+
 	private String status;
 	
-	@NotBlank(message = "Priority is Empty")
+
 	private String priority;
 	
-	@NotBlank(message = "Make is Empty")
+
 	private String make;
 	
-	@NotBlank(message = "Model is Empty") 
+
 	private String model;
 	
-	@NotNull(message = "Price is Empty")
+
 	private float price;
 	
     private byte[] data;
