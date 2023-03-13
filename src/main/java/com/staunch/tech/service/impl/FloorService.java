@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.staunch.tech.dto.BuildingDto;
 import com.staunch.tech.dto.FloorDto;
 import com.staunch.tech.entity.Building;
 import com.staunch.tech.entity.Floor;
@@ -74,5 +76,22 @@ public class FloorService implements IFloorService {
 		}
 		return "SUCCESS";
 	}
+	
+	@Override
+    public Floor updateFloor(int floorId, FloorDto floorDto) {
+		try {
+			if (floorId != floorDto.getId()) {
+				throw new AssetManagementException("floorId in body and path are not same");
+			}
+			var itemOpt = floorRepository.findById(floorId);
+			if (itemOpt.isEmpty()) {
+				throw new AssetManagementException("floorId is Invalid");
+			}
+			return floorRepository.save(new Floor(floorDto.getId(), floorDto.getName(), buildingRepository.findById(floorDto.getBuildingId()).get(), false));
+		} catch (DataIntegrityViolationException e) {
+			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
+		
+    }
+}
 
 }

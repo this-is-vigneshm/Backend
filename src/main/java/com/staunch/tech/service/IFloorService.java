@@ -15,4 +15,5 @@ public interface IFloorService {
 	List<Floor> getAllFloorByBuilding(int buildingId);
     List<Floor> getAllFloors();
     String createMultiFloor(List<FloorDto> floorDto);
+    Floor updateFloor(int floorId, FloorDto floorDto);
 }

@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.staunch.tech.dto.ApiResponseDto;
+import com.staunch.tech.dto.AreaDto;
 import com.staunch.tech.dto.RoomDto;
 import com.staunch.tech.service.impl.RoomService;
 
@@ -58,4 +60,10 @@ public class RoomController {
 		var response = new ApiResponseDto("1200", "Success",roomService.createMultiRoom(roomDto));
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+    @PutMapping("/{roomId}")
+    public ResponseEntity<ApiResponseDto> updateRoom(@PathVariable("roomId") int roomId,
+            @RequestBody RoomDto room) {
+        var response = new ApiResponseDto("1200", "Success",roomService.updateRoom(roomId, room));
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }

@@ -15,5 +15,6 @@ public interface IBuildingService {
 	List<Building> getAllBuildingByLocation(int id);
     List<Building> getAllBuildings();
     String createMultiBuilding(List<BuildingDto> buildingDto);
+    Building updateBuilding(int buildingId, BuildingDto buildingDto);
     
 }
