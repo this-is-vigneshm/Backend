@@ -75,7 +75,8 @@ public class WorkOrder {
     private long expectedCompletionTime;
 	
 	
-	
+	@Transient
+	private boolean expand;
 	
 
 }
