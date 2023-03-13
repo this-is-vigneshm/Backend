@@ -8,6 +8,7 @@ import com.staunch.tech.entity.Inventory;
 import com.staunch.tech.entity.KnowledgeRepo;
 import com.staunch.tech.entity.Location;
 import com.staunch.tech.entity.Locations;
+import com.staunch.tech.entity.LookUps;
 import com.staunch.tech.entity.Resource;
 import com.staunch.tech.entity.Room;
 import com.staunch.tech.entity.Ticket;
@@ -174,7 +175,7 @@ public class ConversionUtils {
 				workorderDto.getName(), workorderDto.getEmailId(), employee, workorderDto.getPhoneNumber(),
 				workorderDto.getDescription(), workorderDto.getWorkSubject(), workorderDto.getTaskDetails(),
 				workorderDto.getDate(), workorderDto.getWorkOrderCost(), data, name, createdBy, createdTime, createdBy,
-				createdTime, 0, workorderDto.getExpectedCompletionTime());
+				createdTime, 0, workorderDto.getExpectedCompletionTime(), false);
 	}
 
 	public static WorkOrderRespDto convertEntityToRespDto(WorkOrder workorder) {
@@ -198,7 +199,7 @@ public class ConversionUtils {
 			return new WorkOrder(workorderDto.getOrderNo(),workorderDto.getWorkOrderCode(), workorderDto.getStatus(),workorderDto.getName(),
 	        		workorderDto.getEmailId(),employee,workorderDto.getPhoneNumber(),
 	                workorderDto.getDescription(),workorderDto.getWorkSubject(),workorderDto.getTaskDetails(),workorderDto.getDate(),workorderDto.getWorkOrderCost(),
-	                data,name,createdBy, createdTime, updatedBy, updatedTime,0,workorderDto.getExpectedCompletionTime());
+	                data,name,createdBy, createdTime, updatedBy, updatedTime,0,workorderDto.getExpectedCompletionTime(), false);
 			}
 
 	public static Inventory convertDtoToNewEntity(InventoryDto inventoryDto, String createdBy, MultipartFile file)
@@ -266,4 +267,13 @@ public class ConversionUtils {
 		return String.valueOf(mont) + "-" + String.valueOf(year);
 	}
 
+	public static LookUps convertDtoToNewEntity(LookUpsDto lookUpsDto, String name) {
+		long createdTime = System.currentTimeMillis();
+		return new LookUps(lookUpsDto.getId(), lookUpsDto.getName(), lookUpsDto.getValues(), name, createdTime, name, createdTime, false);
+	}
+	
+	public static LookUps convertDtoToUpdateEntity(LookUps lookUps,LookUpsDto lookUpsDto, String name) {
+		long updateTime = System.currentTimeMillis();
+		return new LookUps(lookUps.getId(), lookUpsDto.getName(), lookUpsDto.getValues(), lookUps.getCreatedBy(), lookUps.getCreatedTime(), name, updateTime, false);
+	}
 }

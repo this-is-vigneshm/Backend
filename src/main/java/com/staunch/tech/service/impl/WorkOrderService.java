@@ -113,17 +113,14 @@ public class WorkOrderService implements IWorkOrderService {
 	}
 
 	@Override
-	public List<WorkOrderRespDto> getAllWorkOrders() {
+	public List<WorkOrder> getAllWorkOrders() {
 		var workorderList = workorderRepository.findAll();
 		if(workorderList.isEmpty())
 		{
 			throw new AssetManagementException("WorkOrder List is Empty");
 		}
-		var workorderDtoList = new ArrayList<WorkOrderRespDto>();
-		for(WorkOrder workorder : workorderList) {
-			workorderDtoList.add(ConversionUtils.convertEntityToRespDto(workorder));
-		}
-		return workorderDtoList;
+		
+		return workorderList;
 	}
 
 	
@@ -225,7 +222,7 @@ public class WorkOrderService implements IWorkOrderService {
 					i.getName(), i.getEmailId(), employeeOpt.get(), i.getPhoneNumber(),
 					i.getDescription(), i.getWorkSubject(), i.getTaskDetails(),
 					new Date(createdTime), i.getWorkOrderCost(), "".getBytes(), "", userOpt.get().getName(), createdTime,  userOpt.get().getName(),
-					createdTime, 0, (createdTime + 86400000)));
+					createdTime, 0, (createdTime + 86400000), false));
 			
 		}
 		return "Success";

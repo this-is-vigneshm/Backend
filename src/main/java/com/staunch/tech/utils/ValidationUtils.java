@@ -4,6 +4,7 @@ import com.staunch.tech.dto.AssetDto;
 import com.staunch.tech.dto.EmployeeDto;
 import com.staunch.tech.dto.InventoryDto;
 import com.staunch.tech.dto.LocationsDto;
+import com.staunch.tech.dto.LookUpsDto;
 import com.staunch.tech.dto.ResourceDto;
 import com.staunch.tech.dto.TicketDto;
 import com.staunch.tech.dto.WorkOrderDto;
@@ -132,6 +133,17 @@ public class ValidationUtils {
 	            throw new AssetManagementException(locationViolations);
 	        }
 	        logger.info("No Errors Found in Asset Dto");
+	    }
+	    
+	    public void validate(LookUpsDto lookUpsDto){
+	        logger.info("Validating the Ticket Object");
+	        var lookUpsConstraints = validator.validate(lookUpsDto);
+	        String lookUpsViolations = lookUpsConstraints.stream().map(ConstraintViolation::getMessage)
+	                .collect(Collectors.joining(","));
+	        if(!lookUpsViolations.isBlank()){
+	            throw new AssetManagementException(lookUpsViolations);
+	        }
+	        logger.info("No Errors Found in LookUps Dto");
 	    }
 
 }
