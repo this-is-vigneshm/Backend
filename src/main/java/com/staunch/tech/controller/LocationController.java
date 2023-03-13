@@ -47,4 +47,11 @@ public class LocationController {
         var response = new ApiResponseDto("1200", "Success",locationService.createMultiFacility(facility));
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    @PutMapping("/{facilityId}")
+    public ResponseEntity<ApiResponseDto> updateFacility(@PathVariable("facilityId") long facilityId,
+            @RequestBody Location facility) {
+        var response = new ApiResponseDto("1200", "Success",locationService.updateFacility(facilityId, facility));
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
 }
