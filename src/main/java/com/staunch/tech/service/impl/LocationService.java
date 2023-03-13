@@ -90,4 +90,22 @@ public class LocationService implements ILocationService {
 		}
 		return "Success";
 	}
+	
+	@Override
+	public Location updateFacility(long facilityId, Location facility) {
+		validationUtils.validate(facility);
+		var userOpt = employeeRepository.findById(facility.getUserId());
+		if (userOpt.isEmpty()) {
+			throw new AssetManagementException("User Id is Invalid!");
+		}
+		facility.setCreatedBy(userOpt.get().getName());
+		facility.setCreatedTime(System.currentTimeMillis());
+		facility.setLastUpdatedBy(userOpt.get().getName());
+		facility.setLastUpdatedTime(System.currentTimeMillis());
+		try {
+			return locationRepository.save(facility);
+		} catch (DataIntegrityViolationException e) {
+			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
+		}
+	}
 }

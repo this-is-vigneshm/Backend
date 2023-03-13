@@ -35,7 +35,7 @@ public class LocationController {
     }
 
     @DeleteMapping("/{facilityId}")
-    public ResponseEntity<ApiResponseDto> getAllFacilities(
+    public ResponseEntity<ApiResponseDto> getAllFacilitieS(
             @PathVariable("facilityId") long facilityId) {
         var response = new ApiResponseDto("1200", "Success",locationService.deleteFacility(facilityId));
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
