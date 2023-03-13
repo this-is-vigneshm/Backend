@@ -93,7 +93,15 @@ public class LocationService implements ILocationService {
 	
 	@Override
 	public Location updateFacility(long facilityId, Location facility) {
+		try {
+			if (facilityId != facility.getFacilityId()) {
+				throw new AssetManagementException("item id in body and path are not same");
+			}
 		validationUtils.validate(facility);
+		var facOpt = locationRepository.findById(facility.getFacilityId());
+		if (facOpt.isEmpty()) {
+			throw new AssetManagementException("Asset id is Invalid");
+		}
 		var userOpt = employeeRepository.findById(facility.getUserId());
 		if (userOpt.isEmpty()) {
 			throw new AssetManagementException("User Id is Invalid!");
@@ -102,8 +110,7 @@ public class LocationService implements ILocationService {
 		facility.setCreatedTime(System.currentTimeMillis());
 		facility.setLastUpdatedBy(userOpt.get().getName());
 		facility.setLastUpdatedTime(System.currentTimeMillis());
-		try {
-			return locationRepository.save(facility);
+		return locationRepository.save(facility);
 		} catch (DataIntegrityViolationException e) {
 			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
 		}
