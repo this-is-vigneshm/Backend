@@ -1,6 +1,7 @@
 package com.staunch.tech.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -78,6 +79,25 @@ public class LookUpsService implements ILookUpsService{
 		}
 		loopUpsRepo.deleteById(id);
 		return "Deleted Successfully";
+	}
+
+	@Override
+	public String deleteValues(int id,String values) {
+		var lookUpsOpt = loopUpsRepo.findById(id);
+		LookUps lookUps = lookUpsOpt.get();
+		Map<String, String> a = lookUps.getValues();
+		for(var i:a.keySet())
+		{
+			System.out.print(i);
+			if(values.contains(i))
+			{
+				a.remove(i);
+				break;
+			}
+		}
+		lookUps.setValues(a);		
+		loopUpsRepo.save(lookUps);
+		return "Success";
 	}
 
 }

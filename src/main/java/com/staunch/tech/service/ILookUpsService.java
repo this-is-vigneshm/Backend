@@ -1,6 +1,6 @@
 package com.staunch.tech.service;
 
-import java.util.List;
+import java.util.*;
 
 import com.staunch.tech.dto.LookUpsDto;
 import com.staunch.tech.entity.LookUps;
@@ -15,4 +15,5 @@ public interface ILookUpsService {
 	
 	String deleteLookUps(int id);
 	
+	String deleteValues(int id,String values);
 }

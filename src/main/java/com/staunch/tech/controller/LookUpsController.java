@@ -1,5 +1,7 @@
 package com.staunch.tech.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +53,13 @@ public class LookUpsController {
 	public ResponseEntity<ApiResponseDto> deleteLookUps(@PathVariable int id)
 	{
 		var response = new ApiResponseDto("1200", "Success", lookUpsService.deleteLookUps(id));
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/value/{id}")
+	public ResponseEntity<ApiResponseDto> deleteLookUps(@RequestBody String value, @PathVariable int id)
+	{
+		var response = new ApiResponseDto("1200", "Success", lookUpsService.deleteValues(id, value));
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }
