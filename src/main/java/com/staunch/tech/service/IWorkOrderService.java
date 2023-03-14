@@ -12,7 +12,7 @@ import com.staunch.tech.entity.WorkOrder;
 
 public interface IWorkOrderService {
 	WorkOrderRespDto createWorkOrder(WorkOrderDto workorderDto, MultipartFile file) throws IOException ;
-	WorkOrderRespDto getWorkOrderByorder(int workorderorderNo);
+	WorkOrder getWorkOrderByorder(int workorderorderNo);
 	List<WorkOrder> getAllWorkOrders();
 //	List<WorkOrderRespDto> getAllWorkOrderByStatus(String Status);
 //	

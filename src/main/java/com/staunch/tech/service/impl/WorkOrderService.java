@@ -104,12 +104,12 @@ public class WorkOrderService implements IWorkOrderService {
 //	}
 
 	@Override
-	public WorkOrderRespDto getWorkOrderByorder(int workorderorderNo) {
+	public WorkOrder getWorkOrderByorder(int workorderorderNo) {
 		var workorderOpt  =workorderRepository.findById(workorderorderNo);
 		if(workorderOpt.isEmpty()) {
 			throw new AssetManagementException("WorkOrder orderNo is Invalid");
 		}
-		return ConversionUtils.convertEntityToRespDto(workorderOpt.get());
+		return workorderOpt.get();
 	}
 
 	@Override
