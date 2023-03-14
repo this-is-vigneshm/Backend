@@ -13,4 +13,5 @@ public interface IRoomService {
 	List<Room> getAllRoomByFloor(int floorId);
 	List<Room> getAllRoom();
 	String createMultiRoom(List<RoomDto> roomDto);
+	Room updateRoom(int roomId, RoomDto roomDto);
 	}

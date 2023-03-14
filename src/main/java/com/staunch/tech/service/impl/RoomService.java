@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.staunch.tech.dto.FloorDto;
 import com.staunch.tech.dto.RoomDto;
+import com.staunch.tech.entity.Floor;
 import com.staunch.tech.entity.Room;
 import com.staunch.tech.exception.AssetManagementException;
 import com.staunch.tech.repository.FloorRepository;
@@ -75,5 +78,22 @@ public class RoomService implements IRoomService {
 		}
 		return "SUCCESS";
 	}
+	
+	@Override
+    public Room updateRoom(int roomId, RoomDto roomDto) {
+		try {
+			if (roomId != roomDto.getId()) {
+				throw new AssetManagementException("roomId in body and path are not same");
+			}
+			var itemOpt = floorRepository.findById(roomId);
+			if (itemOpt.isEmpty()) {
+				throw new AssetManagementException("roomId is Invalid");
+			}
+			return roomRepository.save(new Room(roomDto.getId(), roomDto.getName(), floorRepository.findById(roomDto.getFloorId()).get()));
+		} catch (DataIntegrityViolationException e) {
+			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
+		
+    }
+}
 
 }

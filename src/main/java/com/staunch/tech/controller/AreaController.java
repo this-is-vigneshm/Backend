@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.staunch.tech.dto.ApiResponseDto;
 import com.staunch.tech.dto.AreaDto;
+import com.staunch.tech.dto.BuildingDto;
 import com.staunch.tech.service.IAreaService;
 import com.staunch.tech.service.impl.AreaService;
 
@@ -59,4 +61,10 @@ public class AreaController {
 		var response = new ApiResponseDto("1200", "Success",areaService.createMultiArea(areaDto));
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+    @PutMapping("/{areaId}")
+    public ResponseEntity<ApiResponseDto> updateArea(@PathVariable("areaId") int areaId,
+            @RequestBody AreaDto area) {
+        var response = new ApiResponseDto("1200", "Success",areaService.updateArea(areaId, area));
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }

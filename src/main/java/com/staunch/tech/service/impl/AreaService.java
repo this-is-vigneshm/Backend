@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.staunch.tech.dto.AreaDto;
+import com.staunch.tech.dto.RoomDto;
 import com.staunch.tech.entity.Area;
+import com.staunch.tech.entity.Room;
 import com.staunch.tech.exception.AssetManagementException;
 import com.staunch.tech.repository.AreaRepository;
 import com.staunch.tech.repository.FloorRepository;
@@ -75,5 +78,22 @@ public class AreaService implements IAreaService {
 		}
 		return "SUCCESS";
 	}
+	
+	@Override
+    public Area updateArea(int areaId, AreaDto areaDto) {
+		try {
+			if (areaId != areaDto.getId()) {
+				throw new AssetManagementException("areaId in body and path are not same");
+			}
+			var itemOpt = floorRepository.findById(areaId);
+			if (itemOpt.isEmpty()) {
+				throw new AssetManagementException("areaId is Invalid");
+			}
+			return areaRepository.save(new Area(areaDto.getId(), areaDto.getName(), floorRepository.findById(areaDto.getFloorId()).get()));
+		} catch (DataIntegrityViolationException e) {
+			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
+		
+    }
+}
 
 }

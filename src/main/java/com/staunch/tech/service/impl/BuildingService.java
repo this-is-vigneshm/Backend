@@ -84,5 +84,22 @@ public class BuildingService implements IBuildingService {
 		}
 		return "SUCCESS";
 	}
+	
+	@Override
+    public Building updateBuilding(int buildingId, BuildingDto buildingDto) {
+		try {
+			if (buildingId != buildingDto.getId()) {
+				throw new AssetManagementException("building id in body and path are not same");
+			}
+			var itemOpt = buildingRepository.findById(buildingId);
+			if (itemOpt.isEmpty()) {
+				throw new AssetManagementException("building id is Invalid");
+			}
+			return buildingRepository.save(new Building(buildingDto.getId(), buildingDto.getName(), locationRepository.findById(buildingDto.getLocationId()).get(), false));
+		} catch (DataIntegrityViolationException e) {
+			throw new AssetManagementException("SQL Error " + e.getRootCause().getMessage());
+		
+    }
 
+}
 }
